@@ -1,0 +1,83 @@
+{
+  "welcome": {
+    "title": "Welcome to HarvestIQ",
+    "subtitle": "AI-powered crop yield prediction platform for North Indian agriculture. Get data-driven insights to optimize your farming practices.",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "features": {
+      "aiPowered": "AI-Powered Predictions",
+      "aiDescription": "Advanced machine learning algorithms analyze multiple data points for accurate yield predictions",
+      "dataIntegration": "Government Data Integration",
+      "dataDescription": "Access to comprehensive agricultural datasets from government sources",
+      "realTime": "Real-time Analytics",
+      "realTimeDescription": "Get instant insights and recommendations based on current conditions"
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Access your agricultural insights dashboard",
+    "registerTitle": "Join HarvestIQ",
+    "registerSubtitle": "Create your account to get started",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "predictions": "Predictions",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Your Agricultural Insights",
+    "quickActions": "Quick Actions",
+    "newPrediction": "New Prediction",
+    "viewReports": "View Reports",
+    "manageFields": "Manage Fields",
+    "recentActivity": "Recent Activity"
+  },
+  "prediction": {
+    "title": "Crop Yield Prediction",
+    "basicInfo": "Basic Information",
+    "cropType": "Crop Type",
+    "farmArea": "Farm Area (hectares)",
+    "region": "Region",
+    "soilHealth": "Soil Health Metrics",
+    "phLevel": "pH Level",
+    "organicContent": "Organic Content (%)",
+    "nitrogen": "Nitrogen (kg/ha)",
+    "phosphorus": "Phosphorus (kg/ha)",
+    "potassium": "Potassium (kg/ha)",
+    "weatherData": "Weather Data",
+    "rainfall": "Rainfall (mm)",
+    "temperature": "Temperature (°C)",
+    "humidity": "Humidity (%)",
+    "predict": "Predict Yield",
+    "results": {
+      "title": "Prediction Results",
+      "expectedYield": "Expected Yield",
+      "confidence": "Confidence Level",
+      "recommendations": "Recommendations"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "submit": "Submit",
+    "close": "Close"
+  }
+}
