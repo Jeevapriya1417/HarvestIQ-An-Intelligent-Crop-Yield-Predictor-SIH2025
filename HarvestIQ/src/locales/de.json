@@ -1,0 +1,83 @@
+{
+  "welcome": {
+    "title": "Willkommen bei HarvestIQ",
+    "subtitle": "KI-gestützte Ernteertragsprognose-Plattform für die nordindische Landwirtschaft. Erhalten Sie datengesteuerte Einblicke zur Optimierung Ihrer landwirtschaftlichen Praktiken.",
+    "getStarted": "Loslegen",
+    "learnMore": "Mehr erfahren",
+    "features": {
+      "aiPowered": "KI-gestützte Vorhersagen",
+      "aiDescription": "Fortschrittliche maschinelle Lernalgorithmen analysieren mehrere Datenpunkte für genaue Ertragsprognosen",
+      "dataIntegration": "Regierungsdatenintegration",
+      "dataDescription": "Zugang zu umfassenden landwirtschaftlichen Datensätzen aus Regierungsquellen",
+      "realTime": "Echtzeitanalysen",
+      "realTimeDescription": "Erhalten Sie sofortige Einblicke und Empfehlungen basierend auf aktuellen Bedingungen"
+    }
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "fullName": "Vollständiger Name",
+    "loginTitle": "Willkommen zurück",
+    "loginSubtitle": "Greifen Sie auf Ihr landwirtschaftliches Insights-Dashboard zu",
+    "registerTitle": "HarvestIQ beitreten",
+    "registerSubtitle": "Erstellen Sie Ihr Konto, um loszulegen",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Haben Sie kein Konto?",
+    "hasAccount": "Haben Sie bereits ein Konto?"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "predictions": "Vorhersagen",
+    "analytics": "Analysen",
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Ihre landwirtschaftlichen Einblicke",
+    "quickActions": "Schnellaktionen",
+    "newPrediction": "Neue Vorhersage",
+    "viewReports": "Berichte anzeigen",
+    "manageFields": "Felder verwalten",
+    "recentActivity": "Letzte Aktivität"
+  },
+  "prediction": {
+    "title": "Ernteertragsprognose",
+    "basicInfo": "Grundinformationen",
+    "cropType": "Kulturpflanzentyp",
+    "farmArea": "Farmfläche (Hektar)",
+    "region": "Region",
+    "soilHealth": "Bodengesundheitsmetriken",
+    "phLevel": "pH-Wert",
+    "organicContent": "Organischer Gehalt (%)",
+    "nitrogen": "Stickstoff (kg/ha)",
+    "phosphorus": "Phosphor (kg/ha)",
+    "potassium": "Kalium (kg/ha)",
+    "weatherData": "Wetterdaten",
+    "rainfall": "Niederschlag (mm)",
+    "temperature": "Temperatur (°C)",
+    "humidity": "Luftfeuchtigkeit (%)",
+    "predict": "Ertrag vorhersagen",
+    "results": {
+      "title": "Vorhersageergebnisse",
+      "expectedYield": "Erwarteter Ertrag",
+      "confidence": "Vertrauensniveau",
+      "recommendations": "Empfehlungen"
+    }
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "submit": "Einreichen",
+    "close": "Schließen"
+  }
+}

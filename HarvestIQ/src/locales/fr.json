@@ -1,0 +1,83 @@
+{
+  "welcome": {
+    "title": "Bienvenue sur HarvestIQ",
+    "subtitle": "Plateforme de prédiction de rendement des cultures alimentée par l'IA pour l'agriculture du nord de l'Inde. Obtenez des informations basées sur les données pour optimiser vos pratiques agricoles.",
+    "getStarted": "Commencer",
+    "learnMore": "En savoir plus",
+    "features": {
+      "aiPowered": "Prédictions alimentées par l'IA",
+      "aiDescription": "Les algorithmes d'apprentissage automatique avancés analysent plusieurs points de données pour des prédictions de rendement précises",
+      "dataIntegration": "Intégration des données gouvernementales",
+      "dataDescription": "Accès à des ensembles de données agricoles complets provenant de sources gouvernementales",
+      "realTime": "Analyses en temps réel",
+      "realTimeDescription": "Obtenez des informations instantanées et des recommandations basées sur les conditions actuelles"
+    }
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "fullName": "Nom complet",
+    "loginTitle": "Bon retour",
+    "loginSubtitle": "Accédez à votre tableau de bord d'informations agricoles",
+    "registerTitle": "Rejoindre HarvestIQ",
+    "registerSubtitle": "Créez votre compte pour commencer",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "hasAccount": "Vous avez déjà un compte ?"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "predictions": "Prédictions",
+    "analytics": "Analyses",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Vos informations agricoles",
+    "quickActions": "Actions rapides",
+    "newPrediction": "Nouvelle prédiction",
+    "viewReports": "Voir les rapports",
+    "manageFields": "Gérer les champs",
+    "recentActivity": "Activité récente"
+  },
+  "prediction": {
+    "title": "Prédiction de rendement des cultures",
+    "basicInfo": "Informations de base",
+    "cropType": "Type de culture",
+    "farmArea": "Superficie de la ferme (hectares)",
+    "region": "Région",
+    "soilHealth": "Métriques de santé du sol",
+    "phLevel": "Niveau de pH",
+    "organicContent": "Contenu organique (%)",
+    "nitrogen": "Azote (kg/ha)",
+    "phosphorus": "Phosphore (kg/ha)",
+    "potassium": "Potassium (kg/ha)",
+    "weatherData": "Données météorologiques",
+    "rainfall": "Précipitations (mm)",
+    "temperature": "Température (°C)",
+    "humidity": "Humidité (%)",
+    "predict": "Prédire le rendement",
+    "results": {
+      "title": "Résultats de prédiction",
+      "expectedYield": "Rendement attendu",
+      "confidence": "Niveau de confiance",
+      "recommendations": "Recommandations"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "submit": "Soumettre",
+    "close": "Fermer"
+  }
+}

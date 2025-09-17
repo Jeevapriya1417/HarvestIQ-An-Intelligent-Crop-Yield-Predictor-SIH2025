@@ -1,0 +1,83 @@
+{
+  "welcome": {
+    "title": "مرحباً بك في HarvestIQ",
+    "subtitle": "منصة تنبؤ إنتاج المحاصيل المدعومة بالذكاء الاصطناعي للزراعة في شمال الهند. احصل على رؤى مدفوعة بالبيانات لتحسين ممارساتك الزراعية.",
+    "getStarted": "البدء",
+    "learnMore": "تعلم المزيد",
+    "features": {
+      "aiPowered": "تنبؤات مدعومة بالذكاء الاصطناعي",
+      "aiDescription": "خوارزميات التعلم الآلي المتقدمة تحلل نقاط بيانات متعددة للحصول على تنبؤات دقيقة للإنتاج",
+      "dataIntegration": "تكامل البيانات الحكومية",
+      "dataDescription": "الوصول إلى مجموعات البيانات الزراعية الشاملة من المصادر الحكومية",
+      "realTime": "التحليلات في الوقت الفعلي",
+      "realTimeDescription": "احصل على رؤى فورية وتوصيات بناءً على الظروف الحالية"
+    }
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "fullName": "الاسم الكامل",
+    "loginTitle": "مرحباً بعودتك",
+    "loginSubtitle": "الوصول إلى لوحة معلومات الرؤى الزراعية الخاصة بك",
+    "registerTitle": "انضم إلى HarvestIQ",
+    "registerSubtitle": "أنشئ حسابك للبدء",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "predictions": "التنبؤات",
+    "analytics": "التحليلات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "subtitle": "رؤاك الزراعية",
+    "quickActions": "الإجراءات السريعة",
+    "newPrediction": "تنبؤ جديد",
+    "viewReports": "عرض التقارير",
+    "manageFields": "إدارة الحقول",
+    "recentActivity": "النشاط الحديث"
+  },
+  "prediction": {
+    "title": "تنبؤ إنتاج المحاصيل",
+    "basicInfo": "المعلومات الأساسية",
+    "cropType": "نوع المحصول",
+    "farmArea": "مساحة المزرعة (هكتار)",
+    "region": "المنطقة",
+    "soilHealth": "مقاييس صحة التربة",
+    "phLevel": "مستوى الحموضة",
+    "organicContent": "المحتوى العضوي (%)",
+    "nitrogen": "النيتروجين (كغ/هكتار)",
+    "phosphorus": "الفوسفور (كغ/هكتار)",
+    "potassium": "البوتاسيوم (كغ/هكتار)",
+    "weatherData": "بيانات الطقس",
+    "rainfall": "هطول الأمطار (مم)",
+    "temperature": "درجة الحرارة (°م)",
+    "humidity": "الرطوبة (%)",
+    "predict": "تنبؤ الإنتاج",
+    "results": {
+      "title": "نتائج التنبؤ",
+      "expectedYield": "الإنتاج المتوقع",
+      "confidence": "مستوى الثقة",
+      "recommendations": "التوصيات"
+    }
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "edit": "تحرير",
+    "delete": "حذف",
+    "submit": "إرسال",
+    "close": "إغلاق"
+  }
+}

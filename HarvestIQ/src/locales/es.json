@@ -1,0 +1,83 @@
+{
+  "welcome": {
+    "title": "Bienvenido a HarvestIQ",
+    "subtitle": "Plataforma de predicción de rendimiento de cultivos impulsada por IA para la agricultura del norte de India. Obtenga información basada en datos para optimizar sus prácticas agrícolas.",
+    "getStarted": "Comenzar",
+    "learnMore": "Saber más",
+    "features": {
+      "aiPowered": "Predicciones impulsadas por IA",
+      "aiDescription": "Los algoritmos avanzados de aprendizaje automático analizan múltiples puntos de datos para predicciones precisas de rendimiento",
+      "dataIntegration": "Integración de datos gubernamentales",
+      "dataDescription": "Acceso a conjuntos de datos agrícolas integrales de fuentes gubernamentales",
+      "realTime": "Análisis en tiempo real",
+      "realTimeDescription": "Obtenga información instantánea y recomendaciones basadas en las condiciones actuales"
+    }
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "fullName": "Nombre completo",
+    "loginTitle": "Bienvenido de vuelta",
+    "loginSubtitle": "Accede a tu panel de información agrícola",
+    "registerTitle": "Únete a HarvestIQ",
+    "registerSubtitle": "Crea tu cuenta para comenzar",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes una cuenta?",
+    "hasAccount": "¿Ya tienes una cuenta?"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "predictions": "Predicciones",
+    "analytics": "Análisis",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "subtitle": "Tus perspectivas agrícolas",
+    "quickActions": "Acciones rápidas",
+    "newPrediction": "Nueva predicción",
+    "viewReports": "Ver informes",
+    "manageFields": "Gestionar campos",
+    "recentActivity": "Actividad reciente"
+  },
+  "prediction": {
+    "title": "Predicción de rendimiento de cultivos",
+    "basicInfo": "Información básica",
+    "cropType": "Tipo de cultivo",
+    "farmArea": "Área de la granja (hectáreas)",
+    "region": "Región",
+    "soilHealth": "Métricas de salud del suelo",
+    "phLevel": "Nivel de pH",
+    "organicContent": "Contenido orgánico (%)",
+    "nitrogen": "Nitrógeno (kg/ha)",
+    "phosphorus": "Fósforo (kg/ha)",
+    "potassium": "Potasio (kg/ha)",
+    "weatherData": "Datos meteorológicos",
+    "rainfall": "Precipitación (mm)",
+    "temperature": "Temperatura (°C)",
+    "humidity": "Humedad (%)",
+    "predict": "Predecir rendimiento",
+    "results": {
+      "title": "Resultados de predicción",
+      "expectedYield": "Rendimiento esperado",
+      "confidence": "Nivel de confianza",
+      "recommendations": "Recomendaciones"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "submit": "Enviar",
+    "close": "Cerrar"
+  }
+}

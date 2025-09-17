@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
@@ -15,6 +15,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { languages, updateDirection } from '../i18n';
 
 const Navbar = () => {
   const { t, i18n } = useTranslation();
@@ -44,11 +45,19 @@ const Navbar = () => {
     }
   ];
 
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'hi', name: 'हिंदी', flag: '🇮🇳' },
-    { code: 'pa', name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' }
-  ];
+  const languages_array = Object.entries(languages).map(([code, config]) => ({
+    code,
+    name: config.name,
+    flag: config.flag
+  }));
+
+  // Group languages for better organization
+  const languageGroups = {
+    primary: languages_array.filter(lang => ['en', 'hi', 'pa'].includes(lang.code)),
+    european: languages_array.filter(lang => ['fr', 'es', 'de'].includes(lang.code)),
+    indian: languages_array.filter(lang => ['bn', 'ta', 'te'].includes(lang.code)),
+    other: languages_array.filter(lang => ['ar'].includes(lang.code))
+  };
 
   const handleNavigation = (href) => {
     navigate(href);
@@ -58,8 +67,14 @@ const Navbar = () => {
   const handleLanguageChange = (langCode) => {
     changeLanguage(langCode);
     i18n.changeLanguage(langCode);
+    updateDirection(langCode);
     setIsLanguageDropdownOpen(false);
   };
+
+  // Apply direction on component mount and language change
+  useEffect(() => {
+    updateDirection(language);
+  }, [language]);
 
   const handleLogout = () => {
     logout();
@@ -113,23 +128,74 @@ const Navbar = () => {
               >
                 <Globe className="h-4 w-4" />
                 <span className="text-sm font-medium">
-                  {languages.find(lang => lang.code === language)?.flag}
+                  {languages_array.find(lang => lang.code === language)?.flag}
                 </span>
                 <ChevronDown className="h-3 w-3" />
               </button>
               
               {isLanguageDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                  {languages.map((lang) => (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 max-h-80 overflow-y-auto">
+                  {/* Primary Languages */}
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50">Primary</div>
+                  {languageGroups.primary.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors ${
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
                         language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
                       }`}
                     >
                       <span className="mr-3">{lang.flag}</span>
-                      {lang.name}
+                      <span className="flex-1">{lang.name}</span>
+                      {language === lang.code && <span className="text-green-600 text-xs">✓</span>}
+                    </button>
+                  ))}
+                  
+                  {/* European Languages */}
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-t border-gray-100">European</div>
+                  {languageGroups.european.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      }`}
+                    >
+                      <span className="mr-3">{lang.flag}</span>
+                      <span className="flex-1">{lang.name}</span>
+                      {language === lang.code && <span className="text-green-600 text-xs">✓</span>}
+                    </button>
+                  ))}
+                  
+                  {/* Indian Languages */}
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-t border-gray-100">Indian Languages</div>
+                  {languageGroups.indian.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      }`}
+                    >
+                      <span className="mr-3">{lang.flag}</span>
+                      <span className="flex-1">{lang.name}</span>
+                      {language === lang.code && <span className="text-green-600 text-xs">✓</span>}
+                    </button>
+                  ))}
+                  
+                  {/* Other Languages */}
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-t border-gray-100">Other</div>
+                  {languageGroups.other.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      }`}
+                    >
+                      <span className="mr-3">{lang.flag}</span>
+                      <span className="flex-1">{lang.name}</span>
+                      {language === lang.code && <span className="text-green-600 text-xs">✓</span>}
                     </button>
                   ))}
                 </div>
@@ -216,8 +282,8 @@ const Navbar = () => {
               {/* Mobile Language Selector */}
               <div className="mb-4">
                 <p className="text-sm font-medium text-gray-700 mb-2">Language</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {languages.map((lang) => (
+                <div className="grid grid-cols-2 gap-2">
+                  {languages_array.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
@@ -229,7 +295,7 @@ const Navbar = () => {
                     >
                       <div className="text-center">
                         <div className="text-lg mb-1">{lang.flag}</div>
-                        <div className="text-xs">{lang.name}</div>
+                        <div className="text-xs truncate">{lang.name}</div>
                       </div>
                     </button>
                   ))}

@@ -47,14 +47,32 @@ export const Button = ({
 export const Input = ({ 
   label, 
   error, 
+  warning,
   hint, 
   required = false,
+  isValidating = false,
+  showValidIcon = true,
   className = '',
+  onBlur,
   ...props 
 }) => {
-  const inputClasses = `w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
-    error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300'
+  const hasError = error && error.trim() !== '';
+  const hasWarning = warning && warning.trim() !== '';
+  const isValid = !hasError && !isValidating && props.value && props.value.trim() !== '';
+  
+  const inputClasses = `w-full px-4 py-3 pr-10 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
+    hasError 
+      ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+      : hasWarning
+      ? 'border-yellow-500 focus:ring-yellow-500 focus:border-yellow-500'
+      : isValid && showValidIcon
+      ? 'border-green-500'
+      : 'border-gray-300'
   } ${className}`;
+  
+  const handleBlur = (e) => {
+    if (onBlur) onBlur(e);
+  };
   
   return (
     <div className="space-y-2">
@@ -64,12 +82,64 @@ export const Input = ({
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
-      <input className={inputClasses} {...props} />
-      {hint && !error && (
-        <p className="text-sm text-gray-500">{hint}</p>
+      <div className="relative">
+        <input 
+          className={inputClasses} 
+          onBlur={handleBlur}
+          {...props} 
+        />
+        
+        {/* Validation Icons */}
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+          {isValidating && (
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-green-500 border-t-transparent"></div>
+          )}
+          {!isValidating && hasError && (
+            <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          )}
+          {!isValidating && hasWarning && !hasError && (
+            <svg className="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          )}
+          {!isValidating && isValid && showValidIcon && !hasError && !hasWarning && (
+            <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+        </div>
+      </div>
+      
+      {/* Error Message */}
+      {hasError && (
+        <div className="flex items-start space-x-2">
+          <svg className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <p className="text-sm text-red-600">{error}</p>
+        </div>
       )}
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
+      
+      {/* Warning Message */}
+      {hasWarning && !hasError && (
+        <div className="flex items-start space-x-2">
+          <svg className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <p className="text-sm text-yellow-600">{warning}</p>
+        </div>
+      )}
+      
+      {/* Hint Message */}
+      {hint && !hasError && !hasWarning && (
+        <div className="flex items-start space-x-2">
+          <svg className="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-sm text-gray-500">{hint}</p>
+        </div>
       )}
     </div>
   );
@@ -79,15 +149,33 @@ export const Input = ({
 export const Select = ({ 
   label, 
   error, 
+  warning,
   options = [], 
   placeholder = 'Select an option',
   required = false,
+  isValidating = false,
+  showValidIcon = true,
   className = '',
+  onBlur,
   ...props 
 }) => {
-  const selectClasses = `w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
-    error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300'
+  const hasError = error && error.trim() !== '';
+  const hasWarning = warning && warning.trim() !== '';
+  const isValid = !hasError && !isValidating && props.value && props.value.trim() !== '';
+  
+  const selectClasses = `w-full px-4 py-3 pr-10 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
+    hasError 
+      ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+      : hasWarning
+      ? 'border-yellow-500 focus:ring-yellow-500 focus:border-yellow-500'
+      : isValid && showValidIcon
+      ? 'border-green-500'
+      : 'border-gray-300'
   } ${className}`;
+  
+  const handleBlur = (e) => {
+    if (onBlur) onBlur(e);
+  };
   
   return (
     <div className="space-y-2">
@@ -97,16 +185,61 @@ export const Select = ({
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
-      <select className={selectClasses} {...props}>
-        <option value="">{placeholder}</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value || option}>
-            {option.label || option}
-          </option>
-        ))}
-      </select>
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
+      <div className="relative">
+        <select 
+          className={selectClasses} 
+          onBlur={handleBlur}
+          {...props}
+        >
+          <option value="">{placeholder}</option>
+          {options.map((option, index) => (
+            <option key={index} value={option.value || option}>
+              {option.label || option}
+            </option>
+          ))}
+        </select>
+        
+        {/* Validation Icons */}
+        <div className="absolute inset-y-0 right-8 flex items-center pr-3 pointer-events-none">
+          {isValidating && (
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-green-500 border-t-transparent"></div>
+          )}
+          {!isValidating && hasError && (
+            <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          )}
+          {!isValidating && hasWarning && !hasError && (
+            <svg className="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          )}
+          {!isValidating && isValid && showValidIcon && !hasError && !hasWarning && (
+            <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+        </div>
+      </div>
+      
+      {/* Error Message */}
+      {hasError && (
+        <div className="flex items-start space-x-2">
+          <svg className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <p className="text-sm text-red-600">{error}</p>
+        </div>
+      )}
+      
+      {/* Warning Message */}
+      {hasWarning && !hasError && (
+        <div className="flex items-start space-x-2">
+          <svg className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <p className="text-sm text-yellow-600">{warning}</p>
+        </div>
       )}
     </div>
   );
@@ -228,11 +361,114 @@ export const LoadingSpinner = ({
   const colors = {
     green: 'border-green-600',
     blue: 'border-blue-600',
-    gray: 'border-gray-600'
+    gray: 'border-gray-600',
+    white: 'border-white'
   };
   
   return (
     <div className={`animate-spin rounded-full border-2 border-t-transparent ${sizes[size]} ${colors[color]} ${className}`}></div>
+  );
+};
+
+// Enhanced Skeleton Loader Component
+export const Skeleton = ({ className = '', variant = 'default', children }) => {
+  const variants = {
+    default: 'bg-gray-200 animate-pulse',
+    shimmer: 'bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer bg-[length:200%_100%]',
+    wave: 'bg-gray-200 animate-pulse relative overflow-hidden'
+  };
+
+  if (variant === 'wave') {
+    return (
+      <div className={`${variants[variant]} ${className}`}>
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-slide-in-right opacity-30"></div>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`${variants[variant]} rounded ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+// Page Loading Component
+export const PageLoader = ({ message = 'Loading...', showSpinner = true }) => {
+  return (
+    <div className="fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div className="text-center animate-fade-in-up">
+        {showSpinner && (
+          <div className="mb-4">
+            <LoadingSpinner size="xl" color="green" />
+          </div>
+        )}
+        <p className="text-gray-600 text-lg font-medium">{message}</p>
+      </div>
+    </div>
+  );
+};
+
+// Card Skeleton Component
+export const CardSkeleton = ({ showImage = false, lines = 3 }) => {
+  return (
+    <Card className="p-6 animate-fade-in">
+      {showImage && (
+        <Skeleton className="w-full h-48 mb-4" variant="shimmer" />
+      )}
+      <div className="space-y-3">
+        <Skeleton className="h-6 w-3/4" variant="shimmer" />
+        {Array.from({ length: lines }).map((_, i) => (
+          <Skeleton key={i} className={`h-4 ${i === lines - 1 ? 'w-1/2' : 'w-full'}`} variant="shimmer" />
+        ))}
+      </div>
+    </Card>
+  );
+};
+
+// Enhanced Toast Notification Component
+export const Toast = ({ 
+  type = 'info', 
+  message, 
+  onClose, 
+  duration = 5000,
+  className = '' 
+}) => {
+  const types = {
+    success: 'bg-green-50 border-green-200 text-green-800',
+    error: 'bg-red-50 border-red-200 text-red-800',
+    warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+    info: 'bg-blue-50 border-blue-200 text-blue-800'
+  };
+
+  const icons = {
+    success: '✓',
+    error: '✕',
+    warning: '⚠',
+    info: 'ℹ'
+  };
+
+  React.useEffect(() => {
+    if (duration > 0) {
+      const timer = setTimeout(onClose, duration);
+      return () => clearTimeout(timer);
+    }
+  }, [duration, onClose]);
+
+  return (
+    <div className={`fixed top-4 right-4 z-50 animate-slide-in-right ${className}`}>
+      <div className={`flex items-center p-4 border rounded-lg shadow-lg max-w-md ${types[type]}`}>
+        <span className="mr-3 text-xl">{icons[type]}</span>
+        <p className="flex-1">{message}</p>
+        <button
+          onClick={onClose}
+          className="ml-3 text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
   );
 };
 
