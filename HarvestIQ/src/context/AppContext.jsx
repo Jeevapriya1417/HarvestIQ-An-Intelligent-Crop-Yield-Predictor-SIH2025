@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authAPI, checkServerHealth } from '../services/api';
 
 const AppContext = createContext();
 
@@ -16,14 +17,16 @@ export const AppProvider = ({ children }) => {
   const [predictions, setPredictions] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [language, setLanguage] = useState('en');
+  const [serverStatus, setServerStatus] = useState('unknown');
 
   // Load user from localStorage on app start
   useEffect(() => {
     const savedUser = localStorage.getItem('harvestiq_user');
     const savedLanguage = localStorage.getItem('harvestiq_language');
     const savedTheme = localStorage.getItem('harvestiq_theme');
+    const savedToken = localStorage.getItem('harvestiq_token');
     
-    if (savedUser) {
+    if (savedUser && savedToken) {
       setUser(JSON.parse(savedUser));
     }
     if (savedLanguage) {
@@ -32,27 +35,35 @@ export const AppProvider = ({ children }) => {
     if (savedTheme) {
       setDarkMode(savedTheme === 'dark');
     }
+
+    // Check server health on app start
+    checkServerConnection();
   }, []);
+
+  // Check server connection
+  const checkServerConnection = async () => {
+    try {
+      const result = await checkServerHealth();
+      setServerStatus(result.success ? 'connected' : 'disconnected');
+    } catch (error) {
+      setServerStatus('disconnected');
+    }
+  };
 
   // Authentication functions
   const login = async (credentials) => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const result = await authAPI.login(credentials);
       
-      const mockUser = {
-        id: 1,
-        name: credentials.email.split('@')[0],
-        email: credentials.email,
-        avatar: null
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('harvestiq_user', JSON.stringify(mockUser));
-      return { success: true };
+      if (result.success) {
+        setUser(result.data.user);
+        return { success: true };
+      } else {
+        return { success: false, error: result.error };
+      }
     } catch (error) {
-      return { success: false, error: error.message };
+      return { success: false, error: 'Network error. Please check your connection.' };
     } finally {
       setIsLoading(false);
     }
@@ -61,29 +72,65 @@ export const AppProvider = ({ children }) => {
   const register = async (userData) => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const result = await authAPI.register(userData);
       
-      const mockUser = {
-        id: Date.now(),
-        name: userData.fullName,
-        email: userData.email,
-        avatar: null
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('harvestiq_user', JSON.stringify(mockUser));
-      return { success: true };
+      if (result.success) {
+        setUser(result.data.user);
+        return { success: true };
+      } else {
+        return { success: false, error: result.error, errors: result.errors };
+      }
     } catch (error) {
-      return { success: false, error: error.message };
+      return { success: false, error: 'Network error. Please check your connection.' };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('harvestiq_user');
+  const logout = async () => {
+    setIsLoading(true);
+    try {
+      await authAPI.logout();
+      setUser(null);
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Clear user even if API call fails
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Update user profile
+  const updateProfile = async (profileData) => {
+    setIsLoading(true);
+    try {
+      const result = await authAPI.updateProfile(profileData);
+      
+      if (result.success) {
+        setUser(result.data.user);
+        return { success: true };
+      } else {
+        return { success: false, error: result.error };
+      }
+    } catch (error) {
+      return { success: false, error: 'Network error. Please check your connection.' };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Change password
+  const changePassword = async (passwordData) => {
+    setIsLoading(true);
+    try {
+      const result = await authAPI.changePassword(passwordData);
+      return result;
+    } catch (error) {
+      return { success: false, error: 'Network error. Please check your connection.' };
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Prediction functions
@@ -117,11 +164,14 @@ export const AppProvider = ({ children }) => {
     predictions,
     darkMode,
     language,
+    serverStatus,
     
     // Authentication
     login,
     register,
     logout,
+    updateProfile,
+    changePassword,
     
     // Predictions
     addPrediction,
@@ -131,7 +181,8 @@ export const AppProvider = ({ children }) => {
     changeLanguage,
     
     // Utils
-    setIsLoading
+    setIsLoading,
+    checkServerConnection
   };
 
   return (

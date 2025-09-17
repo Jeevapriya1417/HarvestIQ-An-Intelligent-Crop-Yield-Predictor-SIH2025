@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, User, Leaf, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Leaf, ArrowLeft, Check, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Auth = () => {
@@ -19,6 +19,27 @@ const Auth = () => {
     fullName: ''
   });
   const [errors, setErrors] = useState({});
+
+  // Password strength validation
+  const getPasswordStrength = (password) => {
+    const requirements = {
+      minLength: password.length >= 6,
+      hasLowercase: /[a-z]/.test(password),
+      hasUppercase: /[A-Z]/.test(password),
+      hasNumber: /\d/.test(password),
+      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+    };
+    
+    const score = Object.values(requirements).filter(Boolean).length;
+    
+    return {
+      requirements,
+      score,
+      strength: score <= 2 ? 'weak' : score <= 4 ? 'medium' : 'strong'
+    };
+  };
+
+  const passwordStrength = getPasswordStrength(formData.password);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,15 +63,21 @@ const Auth = () => {
     // Email validation
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\\S+@\\S+\\.\\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
+    }else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+  newErrors.email = 'Email is invalid';
+}
     
     // Password validation
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
+    } else if (!passwordStrength.requirements.hasLowercase) {
+      newErrors.password = 'Password must contain at least one lowercase letter';
+    } else if (!passwordStrength.requirements.hasUppercase) {
+      newErrors.password = 'Password must contain at least one uppercase letter';
+    } else if (!passwordStrength.requirements.hasNumber) {
+      newErrors.password = 'Password must contain at least one number';
     }
     
     // Registration specific validations
@@ -211,7 +238,9 @@ const Auth = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   className={`w-full pl-12 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
+                    errors.password ? 'border-red-500' : 
+                    formData.password && passwordStrength.score >= 4 ? 'border-green-500' :
+                    formData.password && passwordStrength.score >= 2 ? 'border-yellow-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter your password"
                 />
@@ -223,6 +252,85 @@ const Auth = () => {
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
+              
+              {/* Password Requirements (Show during registration or when password has focus) */}
+              {(!isLogin || formData.password) && (
+                <div className="mt-3 p-3 bg-gray-50 rounded-lg border">
+                  <div className="text-sm font-medium text-gray-700 mb-2">Password Requirements:</div>
+                  <div className="space-y-1">
+                    <div className={`flex items-center text-xs ${
+                      passwordStrength.requirements.minLength ? 'text-green-600' : 'text-gray-500'
+                    }`}>
+                      {passwordStrength.requirements.minLength ? 
+                        <Check className="h-3 w-3 mr-2" /> : 
+                        <X className="h-3 w-3 mr-2" />
+                      }
+                      At least 6 characters
+                    </div>
+                    <div className={`flex items-center text-xs ${
+                      passwordStrength.requirements.hasLowercase ? 'text-green-600' : 'text-gray-500'
+                    }`}>
+                      {passwordStrength.requirements.hasLowercase ? 
+                        <Check className="h-3 w-3 mr-2" /> : 
+                        <X className="h-3 w-3 mr-2" />
+                      }
+                      One lowercase letter (a-z)
+                    </div>
+                    <div className={`flex items-center text-xs ${
+                      passwordStrength.requirements.hasUppercase ? 'text-green-600' : 'text-gray-500'
+                    }`}>
+                      {passwordStrength.requirements.hasUppercase ? 
+                        <Check className="h-3 w-3 mr-2" /> : 
+                        <X className="h-3 w-3 mr-2" />
+                      }
+                      One uppercase letter (A-Z)
+                    </div>
+                    <div className={`flex items-center text-xs ${
+                      passwordStrength.requirements.hasNumber ? 'text-green-600' : 'text-gray-500'
+                    }`}>
+                      {passwordStrength.requirements.hasNumber ? 
+                        <Check className="h-3 w-3 mr-2" /> : 
+                        <X className="h-3 w-3 mr-2" />
+                      }
+                      One number (0-9)
+                    </div>
+                    <div className={`flex items-center text-xs ${
+                      passwordStrength.requirements.hasSpecialChar ? 'text-green-600' : 'text-gray-500'
+                    }`}>
+                      {passwordStrength.requirements.hasSpecialChar ? 
+                        <Check className="h-3 w-3 mr-2" /> : 
+                        <X className="h-3 w-3 mr-2" />
+                      }
+                      One special character (!@#$%^&*)
+                    </div>
+                  </div>
+                  
+                  {/* Password Strength Indicator */}
+                  {formData.password && (
+                    <div className="mt-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium text-gray-600">Strength:</span>
+                        <span className={`text-xs font-medium ${
+                          passwordStrength.strength === 'strong' ? 'text-green-600' :
+                          passwordStrength.strength === 'medium' ? 'text-yellow-600' : 'text-red-600'
+                        }`}>
+                          {passwordStrength.strength.charAt(0).toUpperCase() + passwordStrength.strength.slice(1)}
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full transition-all duration-300 ${
+                            passwordStrength.strength === 'strong' ? 'bg-green-500' :
+                            passwordStrength.strength === 'medium' ? 'bg-yellow-500' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${(passwordStrength.score / 5) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+              
               {errors.password && (
                 <p className="mt-1 text-sm text-red-600">{errors.password}</p>
               )}
@@ -242,7 +350,9 @@ const Auth = () => {
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     className={`w-full pl-12 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                      errors.confirmPassword ? 'border-red-500' :
+                      formData.confirmPassword && formData.password === formData.confirmPassword ? 'border-green-500' :
+                      formData.confirmPassword ? 'border-red-300' : 'border-gray-300'
                     }`}
                     placeholder="Confirm your password"
                   />
@@ -254,6 +364,20 @@ const Auth = () => {
                     {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
+                
+                {/* Password Match Indicator */}
+                {formData.confirmPassword && (
+                  <div className={`mt-2 flex items-center text-sm ${
+                    formData.password === formData.confirmPassword ? 'text-green-600' : 'text-red-600'
+                  }`}>
+                    {formData.password === formData.confirmPassword ? 
+                      <Check className="h-4 w-4 mr-2" /> : 
+                      <X className="h-4 w-4 mr-2" />
+                    }
+                    {formData.password === formData.confirmPassword ? 'Passwords match' : 'Passwords do not match'}
+                  </div>
+                )}
+                
                 {errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
                 )}
