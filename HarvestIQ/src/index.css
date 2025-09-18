@@ -27,6 +27,13 @@
   box-shadow: 0 20px 40px 0 rgba(31, 38, 135, 0.2);
 }
 
+/* Dark mode glass card */
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.3);
+}
+
 /* Enhanced animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -136,6 +143,10 @@
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
   border-radius: 10px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #374151;
 }
 
 ::-webkit-scrollbar-thumb {

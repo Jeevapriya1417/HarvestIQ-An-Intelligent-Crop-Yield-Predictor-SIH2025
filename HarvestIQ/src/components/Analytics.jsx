@@ -152,7 +152,7 @@ const Analytics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navbar />
       
       <div className="container mx-auto py-8 px-4">
@@ -170,10 +170,10 @@ const Analytics = () => {
             </Button>
             
             <div>
-              <h1 className="text-3xl font-display font-bold text-gray-900">
+              <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white">
                 Analytics Dashboard
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-600 dark:text-gray-300 mt-1">
                 Analyze your prediction patterns and performance
               </p>
             </div>
@@ -183,7 +183,7 @@ const Analytics = () => {
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -219,7 +219,7 @@ const Analytics = () => {
           </div>
         ) : error ? (
           <Card className="p-6">
-            <div className="text-center text-red-600">
+            <div className="text-center text-red-600 dark:text-red-400">
               <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>{error}</p>
               <Button onClick={() => window.location.reload()} className="mt-4">
@@ -234,9 +234,9 @@ const Analytics = () => {
               <Card className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Total Predictions</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.totalPredictions}</p>
-                    <p className="text-sm text-gray-500 mt-1">Last {timeRange} days</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Total Predictions</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{analytics.totalPredictions}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">Last {timeRange} days</p>
                   </div>
                   <BarChart3 className="h-10 w-10 text-green-600" />
                 </div>
@@ -245,9 +245,9 @@ const Analytics = () => {
               <Card className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Success Rate</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.successRate}%</p>
-                    <p className="text-sm text-gray-500 mt-1">Completed predictions</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Success Rate</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{analytics.successRate}%</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">Completed predictions</p>
                   </div>
                   <Target className="h-10 w-10 text-blue-600" />
                 </div>
@@ -256,9 +256,9 @@ const Analytics = () => {
               <Card className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Avg Processing</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.avgProcessingTime}ms</p>
-                    <p className="text-sm text-gray-500 mt-1">Per prediction</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Avg Processing</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{analytics.avgProcessingTime}ms</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">Per prediction</p>
                   </div>
                   <LineChart className="h-10 w-10 text-purple-600" />
                 </div>
@@ -267,9 +267,9 @@ const Analytics = () => {
               <Card className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Completed</p>
-                    <p className="text-3xl font-bold text-gray-900">{analytics.completedCount}</p>
-                    <p className="text-sm text-gray-500 mt-1">Successful predictions</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Completed</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{analytics.completedCount}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">Successful predictions</p>
                   </div>
                   <Award className="h-10 w-10 text-yellow-600" />
                 </div>
@@ -280,22 +280,22 @@ const Analytics = () => {
               {/* Monthly Trends */}
               <Card className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900">Monthly Trends</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Monthly Trends</h2>
                   <TrendingUp className="h-5 w-5 text-gray-400" />
                 </div>
                 
                 <div className="space-y-4">
                   {analytics.monthlyTrends.map((month, index) => (
                     <div key={month.month} className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700">{month.month}</span>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{month.month}</span>
                       <div className="flex items-center space-x-4">
                         <div className="flex items-center space-x-2">
                           <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                          <span className="text-sm text-gray-600">{month.completed} completed</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{month.completed} completed</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
-                          <span className="text-sm text-gray-600">{month.predictions} total</span>
+                          <div className="w-3 h-3 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{month.predictions} total</span>
                         </div>
                       </div>
                     </div>
@@ -303,7 +303,7 @@ const Analytics = () => {
                 </div>
                 
                 {analytics.monthlyTrends.length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <LineChart className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No data available for the selected period</p>
                   </div>
@@ -313,7 +313,7 @@ const Analytics = () => {
               {/* Crop Distribution */}
               <Card className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900">Crop Distribution</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Crop Distribution</h2>
                   <PieChart className="h-5 w-5 text-gray-400" />
                 </div>
                 
@@ -327,16 +327,16 @@ const Analytics = () => {
                       <div key={crop} className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div className={`w-4 h-4 rounded-full ${getColorForIndex(index)}`}></div>
-                          <span className="text-sm font-medium text-gray-700">{crop}</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{crop}</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-24 bg-gray-200 rounded-full h-2">
+                          <div className="w-24 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
                             <div 
                               className={`h-2 rounded-full ${getColorForIndex(index)}`}
                               style={{ width: `${percentage}%` }}
                             ></div>
                           </div>
-                          <span className="text-sm text-gray-600 w-12 text-right">{percentage}%</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right">{percentage}%</span>
                         </div>
                       </div>
                     );
@@ -344,7 +344,7 @@ const Analytics = () => {
                 </div>
                 
                 {Object.keys(analytics.cropDistribution).length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <PieChart className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No crop data available</p>
                   </div>
@@ -354,36 +354,36 @@ const Analytics = () => {
 
             {/* Performance Insights */}
             <Card className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Performance Insights</h2>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Performance Insights</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-4 bg-green-50 rounded-lg">
+                <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
                   <Award className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <p className="font-semibold text-green-800">
+                  <p className="font-semibold text-green-800 dark:text-green-200">
                     {analytics.successRate >= 90 ? 'Excellent' : 
                      analytics.successRate >= 70 ? 'Good' : 
                      analytics.successRate >= 50 ? 'Average' : 'Needs Improvement'}
                   </p>
-                  <p className="text-sm text-green-600">Prediction Success Rate</p>
+                  <p className="text-sm text-green-600 dark:text-green-400">Prediction Success Rate</p>
                 </div>
                 
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <p className="font-semibold text-blue-800">
+                  <p className="font-semibold text-blue-800 dark:text-blue-200">
                     {analytics.totalPredictions >= 20 ? 'Very Active' :
                      analytics.totalPredictions >= 10 ? 'Active' :
                      analytics.totalPredictions >= 5 ? 'Moderate' : 'Getting Started'}
                   </p>
-                  <p className="text-sm text-blue-600">Usage Level</p>
+                  <p className="text-sm text-blue-600 dark:text-blue-400">Usage Level</p>
                 </div>
                 
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
+                <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                   <LineChart className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                  <p className="font-semibold text-purple-800">
+                  <p className="font-semibold text-purple-800 dark:text-purple-200">
                     {analytics.avgProcessingTime < 1000 ? 'Fast' :
                      analytics.avgProcessingTime < 3000 ? 'Normal' : 'Slow'}
                   </p>
-                  <p className="text-sm text-purple-600">Processing Speed</p>
+                  <p className="text-sm text-purple-600 dark:text-purple-400">Processing Speed</p>
                 </div>
               </div>
             </Card>

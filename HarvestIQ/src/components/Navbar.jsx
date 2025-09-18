@@ -12,7 +12,9 @@ import {
   LogOut,
   Globe,
   User,
-  ChevronDown
+  ChevronDown,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { languages, updateDirection } from '../i18n';
@@ -21,7 +23,7 @@ const Navbar = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout, language, changeLanguage } = useApp();
+  const { user, logout, language, changeLanguage, darkMode, toggleDarkMode } = useApp();
   
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
@@ -86,7 +88,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-green-100 sticky top-0 z-50">
+    <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-green-100 dark:border-gray-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -94,7 +96,7 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
               <Leaf className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-display font-bold text-gray-900">HarvestIQ</span>
+            <span className="text-xl font-display font-bold text-gray-900 dark:text-white">HarvestIQ</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -107,8 +109,8 @@ const Navbar = () => {
                   onClick={() => handleNavigation(item.href)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     isActive(item.href)
-                      ? 'bg-green-100 text-green-700'
-                      : 'text-gray-600 hover:text-green-600 hover:bg-green-50'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -120,11 +122,20 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+              title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            
             {/* Language Selector */}
             <div className="relative">
               <button
                 onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-                className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
               >
                 <Globe className="h-4 w-4" />
                 <span className="text-sm font-medium">
@@ -134,15 +145,15 @@ const Navbar = () => {
               </button>
               
               {isLanguageDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 max-h-80 overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50 max-h-80 overflow-y-auto">
                   {/* Primary Languages */}
-                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50">Primary</div>
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700">Primary</div>
                   {languageGroups.primary.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
-                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       <span className="mr-3">{lang.flag}</span>
@@ -152,13 +163,13 @@ const Navbar = () => {
                   ))}
                   
                   {/* European Languages */}
-                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-t border-gray-100">European</div>
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 border-t border-gray-100 dark:border-gray-600">European</div>
                   {languageGroups.european.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
-                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       <span className="mr-3">{lang.flag}</span>
@@ -168,13 +179,13 @@ const Navbar = () => {
                   ))}
                   
                   {/* Indian Languages */}
-                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-t border-gray-100">Indian Languages</div>
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 border-t border-gray-100 dark:border-gray-600">Indian Languages</div>
                   {languageGroups.indian.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
-                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       <span className="mr-3">{lang.flag}</span>
@@ -184,13 +195,13 @@ const Navbar = () => {
                   ))}
                   
                   {/* Other Languages */}
-                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 border-t border-gray-100">Other</div>
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 border-t border-gray-100 dark:border-gray-600">Other</div>
                   {languageGroups.other.map((lang) => (
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 transition-colors flex items-center ${
-                        language === lang.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors flex items-center ${
+                        language === lang.code ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'text-gray-700 dark:text-gray-300'
                       }`}
                     >
                       <span className="mr-3">{lang.flag}</span>
@@ -206,31 +217,31 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
               >
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <User className="h-4 w-4 text-green-600" />
+                <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                  <User className="h-4 w-4 text-green-600 dark:text-green-400" />
                 </div>
                 <span className="text-sm font-medium">{user?.name}</span>
                 <ChevronDown className="h-3 w-3" />
               </button>
               
               {isUserDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                   <button
                     onClick={() => {
                       navigate('/settings');
                       setIsUserDropdownOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-green-50 transition-colors flex items-center space-x-2"
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors flex items-center space-x-2"
                   >
                     <Settings className="h-4 w-4" />
                     <span>{t('navigation.settings')}</span>
                   </button>
-                  <hr className="my-1" />
+                  <hr className="my-1 border-gray-200 dark:border-gray-600" />
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center space-x-2"
                   >
                     <LogOut className="h-4 w-4" />
                     <span>{t('navigation.logout')}</span>
@@ -244,7 +255,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-600 hover:text-green-600 transition-colors"
+              className="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -257,7 +268,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4">
+          <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4">
             <div className="space-y-2">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
@@ -267,8 +278,8 @@ const Navbar = () => {
                     onClick={() => handleNavigation(item.href)}
                     className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200 ${
                       isActive(item.href)
-                        ? 'bg-green-100 text-green-700'
-                        : 'text-gray-600 hover:text-green-600 hover:bg-green-50'
+                        ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20'
                     }`}
                   >
                     <Icon className="h-5 w-5" />
@@ -278,10 +289,21 @@ const Navbar = () => {
               })}
             </div>
             
-            <div className="border-t border-gray-200 mt-4 pt-4">
+            <div className="border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
+              {/* Mobile Theme Toggle */}
+              <div className="mb-4">
+                <button
+                  onClick={toggleDarkMode}
+                  className="w-full flex items-center space-x-3 px-3 py-3 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+                >
+                  {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  <span className="font-medium">{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                </button>
+              </div>
+              
               {/* Mobile Language Selector */}
               <div className="mb-4">
-                <p className="text-sm font-medium text-gray-700 mb-2">Language</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Language</p>
                 <div className="grid grid-cols-2 gap-2">
                   {languages_array.map((lang) => (
                     <button
@@ -289,8 +311,8 @@ const Navbar = () => {
                       onClick={() => handleLanguageChange(lang.code)}
                       className={`p-2 rounded-lg text-sm transition-colors ${
                         language === lang.code
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-gray-100 text-gray-700 hover:bg-green-50'
+                          ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-900/20'
                       }`}
                     >
                       <div className="text-center">
@@ -309,7 +331,7 @@ const Navbar = () => {
                     navigate('/settings');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="w-full flex items-center space-x-3 px-3 py-3 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                  className="w-full flex items-center space-x-3 px-3 py-3 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
                 >
                   <Settings className="h-5 w-5" />
                   <span className="font-medium">{t('navigation.settings')}</span>
@@ -317,7 +339,7 @@ const Navbar = () => {
                 
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center space-x-3 px-3 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="w-full flex items-center space-x-3 px-3 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
                   <span className="font-medium">{t('navigation.logout')}</span>

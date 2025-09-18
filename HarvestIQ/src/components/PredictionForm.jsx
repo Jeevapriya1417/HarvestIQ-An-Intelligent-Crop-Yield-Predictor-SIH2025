@@ -189,16 +189,16 @@ const PredictionForm = () => {
   const progress = ((currentStep - 1) / 3) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navbar />
       <div className="container mx-auto py-8 px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className={`text-center mb-8 transition-all duration-700 ${isHeaderVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4 animate-fade-in-down">
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-4 animate-fade-in-down">
               {t('prediction.title')}
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
               Get AI-powered crop yield predictions using comprehensive agricultural data
             </p>
           </div>
@@ -238,7 +238,7 @@ const PredictionForm = () => {
             />
             
             <div className="text-center mt-3">
-              <span className="text-sm text-gray-600 font-medium">
+              <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                 Step {currentStep} of 4
               </span>
             </div>
@@ -264,10 +264,10 @@ const PredictionForm = () => {
                 {currentStep === 1 && (
                   <div className="animate-fade-in">
                     <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center">
                         <Leaf className="h-6 w-6 text-green-600" />
                       </div>
-                      <h2 className="text-2xl font-display font-semibold text-gray-900">
+                      <h2 className="text-2xl font-display font-semibold text-gray-900 dark:text-white">
                         Basic Information
                       </h2>
                     </div>
@@ -323,10 +323,10 @@ const PredictionForm = () => {
                 {currentStep === 2 && (
                   <div className="animate-fade-in">
                     <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center">
                         <Beaker className="h-6 w-6 text-blue-600" />
                       </div>
-                      <h2 className="text-2xl font-display font-semibold text-gray-900">
+                      <h2 className="text-2xl font-display font-semibold text-gray-900 dark:text-white">
                         Soil Health Metrics
                       </h2>
                     </div>
@@ -422,10 +422,10 @@ const PredictionForm = () => {
                 {currentStep === 3 && (
                   <div className="animate-fade-in">
                     <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center">
                         <Cloud className="h-6 w-6 text-orange-600" />
                       </div>
-                      <h2 className="text-2xl font-display font-semibold text-gray-900">
+                      <h2 className="text-2xl font-display font-semibold text-gray-900 dark:text-white">
                         Weather Conditions
                       </h2>
                     </div>
@@ -528,16 +528,16 @@ const PredictionForm = () => {
                   <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
                 
-                <h2 className="text-2xl font-display font-bold text-gray-900">
+                <h2 className="text-2xl font-display font-bold text-gray-900 dark:text-white">
                   Prediction Generated Successfully!
                 </h2>
                 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 max-w-md mx-auto">
-                  <h3 className="text-lg font-semibold text-green-900 mb-2">Expected Yield</h3>
-                  <p className="text-3xl font-bold text-green-600">
+                <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-6 max-w-md mx-auto">
+                  <h3 className="text-lg font-semibold text-green-900 dark:text-green-100 mb-2">Expected Yield</h3>
+                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                     {prediction.prediction?.expectedYield || 'N/A'} tons/ha
                   </p>
-                  <p className="text-sm text-green-700 mt-2">
+                  <p className="text-sm text-green-700 dark:text-green-300 mt-2">
                     Confidence: {prediction.confidence || 95}%
                   </p>
                 </div>

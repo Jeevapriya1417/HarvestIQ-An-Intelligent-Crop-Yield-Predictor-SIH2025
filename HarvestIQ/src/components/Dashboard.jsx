@@ -168,7 +168,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -176,21 +176,21 @@ const Dashboard = () => {
         <div className="mb-8 animate-fade-in-down">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-2 animate-slide-up">
+              <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-2 animate-slide-up">
                 Welcome back, {user?.name || 'User'}! 👋
               </h1>
-              <p className="text-lg text-gray-600 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+              <p className="text-lg text-gray-600 dark:text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 {t('dashboard.subtitle')}
               </p>
             </div>
             
             {/* Real-time Status & Refresh */}
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
                 {weatherError || statsError || activitiesError ? (
-                  <WifiOff className="h-4 w-4 text-red-500" />
+                  <WifiOff className="h-4 w-4 text-red-500 dark:text-red-400" />
                 ) : (
-                  <Wifi className="h-4 w-4 text-green-500 animate-pulse" />
+                  <Wifi className="h-4 w-4 text-green-500 dark:text-green-400 animate-pulse" />
                 )}
                 <span className="hidden md:inline">
                   {weatherError || statsError || activitiesError ? 'Connection Issues' : 'Live Data'}
@@ -199,7 +199,7 @@ const Dashboard = () => {
               
               <button
                 onClick={refreshAllData}
-                className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 hover:text-green-600 bg-white rounded-lg border border-gray-200 hover:border-green-300 transition-all duration-200 hover:shadow-md"
+                className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-green-300 dark:hover:border-green-600 transition-all duration-200 hover:shadow-md"
                 title="Refresh all data"
               >
                 <RefreshCw className="h-4 w-4" />
@@ -210,7 +210,7 @@ const Dashboard = () => {
           
           {/* Last Updated Info */}
           {(weatherLastUpdated || statsLastUpdated) && (
-            <div className="text-xs text-gray-500 animate-fade-in">
+            <div className="text-xs text-gray-500 dark:text-gray-400 animate-fade-in">
               Last updated: {new Date(weatherLastUpdated || statsLastUpdated).toLocaleTimeString()}
             </div>
           )}
@@ -229,7 +229,7 @@ const Dashboard = () => {
               return (
                 <div 
                   key={index} 
-                  className="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:shadow-green-100 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 animate-scale-in group cursor-pointer"
+                  className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:shadow-green-100 dark:hover:shadow-green-900/20 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 animate-scale-in group cursor-pointer"
                   style={{ animationDelay: getAnimationDelay(index) }}
                   onClick={() => {
                     // Add click functionality based on stat type
@@ -240,10 +240,10 @@ const Dashboard = () => {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 mb-1 group-hover:text-gray-700 transition-colors">{stat.title}</p>
-                      <p className="text-2xl font-bold text-gray-900 group-hover:text-green-600 transition-colors">{stat.value}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">{stat.title}</p>
+                      <p className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{stat.value}</p>
                     </div>
-                    <div className={`w-12 h-12 rounded-lg ${stat.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-12 h-12 rounded-lg ${stat.bg} dark:bg-opacity-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                       <Icon className={`h-6 w-6 ${stat.color} group-hover:animate-bounce-subtle`} />
                     </div>
                   </div>
@@ -257,10 +257,10 @@ const Dashboard = () => {
           {/* Quick Actions */}
           <div className="lg:col-span-2">
             <div 
-              className="bg-white rounded-xl border border-gray-100 p-6 mb-8 animate-slide-in-left shadow-sm hover:shadow-lg transition-all duration-300"
+              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 mb-8 animate-slide-in-left shadow-sm hover:shadow-lg transition-all duration-300"
               style={{ animationDelay: '400ms' }}
             >
-              <h2 className="text-xl font-display font-semibold text-gray-900 mb-6">
+              <h2 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-6">
                 {t('dashboard.quickActions')}
               </h2>
               
@@ -278,7 +278,7 @@ const Dashboard = () => {
                       <button
                         key={index}
                         onClick={action.onClick}
-                        className="group text-left p-6 rounded-xl border border-gray-200 hover:border-green-300 hover:shadow-lg hover:shadow-green-50 transition-all duration-300 transform hover:-translate-y-1 animate-fade-in-up"
+                        className="group text-left p-6 rounded-xl border border-gray-200 dark:border-gray-600 hover:border-green-300 dark:hover:border-green-600 hover:shadow-lg hover:shadow-green-50 dark:hover:shadow-green-900/20 transition-all duration-300 transform hover:-translate-y-1 animate-fade-in-up bg-white dark:bg-gray-700"
                         style={{ animationDelay: `${500 + index * 100}ms` }}
                       >
                         <div className="flex items-start space-x-4">
@@ -286,10 +286,10 @@ const Dashboard = () => {
                             <Icon className="h-6 w-6 text-white group-hover:animate-bounce-subtle" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-green-600 transition-colors">
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                               {action.title}
                             </h3>
-                            <p className="text-sm text-gray-600 group-hover:text-gray-700 transition-colors">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
                               {action.description}
                             </p>
                           </div>
@@ -303,10 +303,10 @@ const Dashboard = () => {
 
             {/* Recent Predictions */}
             <div 
-              className="bg-white rounded-xl border border-gray-100 p-6 animate-slide-in-left shadow-sm hover:shadow-lg transition-all duration-300"
+              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 animate-slide-in-left shadow-sm hover:shadow-lg transition-all duration-300"
               style={{ animationDelay: '600ms' }}
             >
-              <h2 className="text-xl font-display font-semibold text-gray-900 mb-6">
+              <h2 className="text-xl font-display font-semibold text-gray-900 dark:text-white mb-6">
                 Recent Predictions
               </h2>
               
@@ -319,23 +319,23 @@ const Dashboard = () => {
               ) : predictions.length > 0 ? (
                 <div className="space-y-4">
                   {predictions.slice(0, 3).map((prediction) => (
-                    <div key={prediction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div key={prediction.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div className="flex items-center space-x-4">
-                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                          <Leaf className="h-5 w-5 text-green-600" />
+                        <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                          <Leaf className="h-5 w-5 text-green-600 dark:text-green-400" />
                         </div>
                         <div>
-                          <h4 className="font-medium text-gray-900">{prediction.cropType || 'Crop'} Prediction</h4>
-                          <p className="text-sm text-gray-600">
+                          <h4 className="font-medium text-gray-900 dark:text-white">{prediction.cropType || 'Crop'} Prediction</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
                             {new Date(prediction.timestamp).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-green-600">
+                        <p className="font-semibold text-green-600 dark:text-green-400">
                           {prediction.expectedYield || 'N/A'} tons/ha
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
                           {prediction.confidence || '95'}% confidence
                         </p>
                       </div>
@@ -344,8 +344,8 @@ const Dashboard = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-4">No predictions yet</p>
+                  <TrendingUp className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">No predictions yet</p>
                   <button
                     onClick={() => navigate('/prediction')}
                     className="bg-gradient-primary text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all duration-300"
@@ -361,7 +361,7 @@ const Dashboard = () => {
           <div className="space-y-6">
             {/* Weather Widget */}
             <div 
-              className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 animate-slide-in-right"
+              className="bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 animate-slide-in-right"
               style={{ animationDelay: '500ms' }}
             >
               <div className="flex items-center justify-between mb-4">
@@ -405,10 +405,10 @@ const Dashboard = () => {
 
             {/* Recent Activity */}
             <div 
-              className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:shadow-lg transition-all duration-300 animate-slide-in-right"
+              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-all duration-300 animate-slide-in-right"
               style={{ animationDelay: '700ms' }}
             >
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 {t('dashboard.recentActivity')}
               </h3>
               
@@ -437,15 +437,15 @@ const Dashboard = () => {
                     return (
                       <div 
                         key={activity.id} 
-                        className="flex items-start space-x-3 hover:bg-gray-50 p-2 rounded-lg transition-colors duration-200 animate-fade-in-up"
+                        className="flex items-start space-x-3 hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-lg transition-colors duration-200 animate-fade-in-up"
                         style={{ animationDelay: `${800 + index * 100}ms` }}
                       >
-                        <div className={`w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-200`}>
+                        <div className={`w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-200`}>
                           <Icon className={`h-4 w-4 ${activity.color}`} />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-900">{activity.action}</p>
-                          <p className="text-xs text-gray-500">{activity.timestamp}</p>
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">{activity.action}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">{activity.timestamp}</p>
                         </div>
                       </div>
                     );
@@ -456,13 +456,13 @@ const Dashboard = () => {
 
             {/* Tips */}
             <div 
-              className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200 shadow-sm hover:shadow-lg transition-all duration-300 animate-slide-in-right"
+              className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-6 border border-green-200 dark:border-green-800 shadow-sm hover:shadow-lg transition-all duration-300 animate-slide-in-right"
               style={{ animationDelay: '900ms' }}
             >
-              <h3 className="text-lg font-semibold text-green-900 mb-3 flex items-center">
+              <h3 className="text-lg font-semibold text-green-900 dark:text-green-300 mb-3 flex items-center">
                 <span className="animate-bounce-subtle mr-2">💡</span> Pro Tip
               </h3>
-              <p className="text-sm text-green-800 leading-relaxed">
+              <p className="text-sm text-green-800 dark:text-green-200 leading-relaxed">
                 Regular soil testing every 6 months can improve prediction accuracy by up to 15%. 
                 Keep your field data updated for the best results.
               </p>

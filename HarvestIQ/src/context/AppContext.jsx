@@ -33,7 +33,14 @@ export const AppProvider = ({ children }) => {
       setLanguage(savedLanguage);
     }
     if (savedTheme) {
-      setDarkMode(savedTheme === 'dark');
+      const isDark = savedTheme === 'dark';
+      setDarkMode(isDark);
+      // Apply theme to document
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
 
     // Check server health on app start
@@ -150,6 +157,13 @@ export const AppProvider = ({ children }) => {
     const newMode = !darkMode;
     setDarkMode(newMode);
     localStorage.setItem('harvestiq_theme', newMode ? 'dark' : 'light');
+    
+    // Apply theme to document
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   };
 
   const changeLanguage = (newLanguage) => {

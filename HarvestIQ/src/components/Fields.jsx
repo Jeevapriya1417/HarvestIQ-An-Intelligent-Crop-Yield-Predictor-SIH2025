@@ -183,7 +183,7 @@ const Fields = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navbar />
       
       <div className="container mx-auto py-8 px-4">
@@ -201,10 +201,10 @@ const Fields = () => {
             </Button>
             
             <div>
-              <h1 className="text-3xl font-display font-bold text-gray-900">
+              <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white">
                 Field Management
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-600 dark:text-gray-300 mt-1">
                 Manage your agricultural fields and their properties
               </p>
             </div>
@@ -224,7 +224,7 @@ const Fields = () => {
         {showAddForm && (
           <Card className="p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {editingField ? 'Edit Field' : 'Add New Field'}
               </h2>
               <Button variant="outline" size="sm" onClick={resetForm}>
@@ -294,7 +294,7 @@ const Fields = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Description (Optional)
                 </label>
                 <textarea
@@ -302,7 +302,7 @@ const Fields = () => {
                   value={formData.description}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="Additional information about this field..."
                 />
               </div>
@@ -327,7 +327,7 @@ const Fields = () => {
             </div>
           ) : error ? (
             <Card className="p-6">
-              <div className="text-center text-red-600">
+              <div className="text-center text-red-600 dark:text-red-400">
                 <MapPin className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p>{error}</p>
                 <Button onClick={() => window.location.reload()} className="mt-4">
@@ -338,8 +338,8 @@ const Fields = () => {
           ) : fields.length === 0 ? (
             <Card className="p-6">
               <div className="text-center py-12">
-                <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">No fields added yet</p>
+                <MapPin className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                <p className="text-gray-600 dark:text-gray-400 mb-4">No fields added yet</p>
                 <Button onClick={() => setShowAddForm(true)}>
                   Add Your First Field
                 </Button>
@@ -348,11 +348,11 @@ const Fields = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {fields.map((field) => (
-                <Card key={field._id} className="p-6 hover:shadow-lg transition-shadow">
+                <Card key={field._id} className="p-6 hover:shadow-lg transition-shadow dark:hover:shadow-xl">
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{field.name}</h3>
-                      <p className="text-sm text-gray-600">{field.size} hectares</p>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{field.name}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{field.size} hectares</p>
                     </div>
                     
                     <div className="flex items-center space-x-2">
@@ -367,7 +367,7 @@ const Fields = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => handleDelete(field._id)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -376,7 +376,7 @@ const Fields = () => {
 
                   <div className="space-y-3">
                     {field.coordinates && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
+                      <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
                         <MapPin className="h-4 w-4" />
                         <span>
                           {field.coordinates.latitude?.toFixed(4)}, {field.coordinates.longitude?.toFixed(4)}
@@ -392,27 +392,27 @@ const Fields = () => {
                     )}
                     
                     {field.soilType && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
+                      <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
                         <Beaker className="h-4 w-4" />
                         <span className="capitalize">{field.soilType} soil</span>
                       </div>
                     )}
                     
                     {field.currentCrop && (
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
+                      <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
                         <Leaf className="h-4 w-4" />
                         <span>Currently growing: {field.currentCrop}</span>
                       </div>
                     )}
                     
                     {field.description && (
-                      <p className="text-sm text-gray-600 mt-3 p-3 bg-gray-50 rounded-lg">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                         {field.description}
                       </p>
                     )}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-gray-200">
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                     <Button
                       variant="outline"
                       size="sm"

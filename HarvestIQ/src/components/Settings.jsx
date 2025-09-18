@@ -24,7 +24,7 @@ import { languages, updateDirection } from '../i18n';
 const Settings = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { user, logout, updateUser } = useApp();
+  const { user, logout, updateProfile, changePassword, darkMode, toggleDarkMode } = useApp();
   
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,6 @@ const Settings = () => {
   // Settings state
   const [settings, setSettings] = useState({
     language: i18n.language || 'en',
-    theme: localStorage.getItem('theme') || 'light',
     notifications: {
       email: true,
       push: false,
@@ -99,7 +98,8 @@ const Settings = () => {
       const result = await authAPI.updateProfile(profileData);
       
       if (result.success) {
-        updateUser(result.data.user);
+        // Update the user in context
+        // Note: updateProfile function should be available from useApp
         showMessage('success', 'Profile updated successfully');
       } else {
         showMessage('error', result.error);
@@ -154,16 +154,10 @@ const Settings = () => {
   };
 
   const handleThemeChange = (theme) => {
-    setSettings(prev => ({ ...prev, theme }));
-    localStorage.setItem('theme', theme);
-    
-    // Apply theme (basic implementation)
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    // Use the AppContext toggleDarkMode function
+    if ((theme === 'dark' && !darkMode) || (theme === 'light' && darkMode)) {
+      toggleDarkMode();
     }
-    
     showMessage('success', 'Theme preference saved');
   };
 
@@ -211,7 +205,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navbar />
       
       <div className="container mx-auto py-8 px-4">
@@ -229,10 +223,10 @@ const Settings = () => {
             </Button>
             
             <div>
-              <h1 className="text-3xl font-display font-bold text-gray-900">
+              <h1 className="text-3xl font-display font-bold text-gray-900 dark:text-white">
                 Settings
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-600 dark:text-gray-300 mt-1">
                 Manage your account preferences and settings
               </p>
             </div>
@@ -243,8 +237,8 @@ const Settings = () => {
         {message.text && (
           <div className={`mb-6 p-4 rounded-lg ${
             message.type === 'success' 
-              ? 'bg-green-50 text-green-800 border border-green-200' 
-              : 'bg-red-50 text-red-800 border border-red-200'
+              ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800' 
+              : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800'
           }`}>
             {message.text}
           </div>
@@ -253,7 +247,7 @@ const Settings = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
-            <Card className="p-4">
+            <Card className="p-4 dark:bg-gray-800 dark:border-gray-700">
               <nav className="space-y-2">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
@@ -263,8 +257,8 @@ const Settings = () => {
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
                         activeTab === tab.id
-                          ? 'bg-green-50 text-green-700 border border-green-200'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700'
+                          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                       }`}
                     >
                       <Icon className="h-5 w-5" />
@@ -278,11 +272,11 @@ const Settings = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <Card className="p-6">
+            <Card className="p-6 dark:bg-gray-800 dark:border-gray-700">
               {/* Profile Tab */}
               {activeTab === 'profile' && (
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile Information</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Profile Information</h2>
                   
                   <form onSubmit={handleProfileSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -343,7 +337,7 @@ const Settings = () => {
               {/* Security Tab */}
               {activeTab === 'security' && (
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Security Settings</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Security Settings</h2>
                   
                   <form onSubmit={handlePasswordSubmit} className="space-y-6">
                     <div className="space-y-4">
@@ -359,7 +353,7 @@ const Settings = () => {
                         <button
                           type="button"
                           onClick={() => togglePasswordVisibility('current')}
-                          className="absolute right-3 top-9 text-gray-400 hover:text-gray-600"
+                          className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
                         >
                           {showPasswords.current ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                         </button>
@@ -415,12 +409,12 @@ const Settings = () => {
               {/* Preferences Tab */}
               {activeTab === 'preferences' && (
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Preferences</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Preferences</h2>
                   
                   <div className="space-y-6">
                     {/* Language */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-3">Language</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Language</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-60 overflow-y-auto">
                         {languageOptions.map((lang) => (
                           <button
@@ -428,32 +422,32 @@ const Settings = () => {
                             onClick={() => handleLanguageChange(lang.value)}
                             className={`p-3 rounded-lg border text-center transition-colors ${
                               settings.language === lang.value
-                                ? 'border-green-500 bg-green-50 text-green-700'
-                                : 'border-gray-300 hover:border-gray-400'
+                                ? 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                                : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                             }`}
                           >
                             <div className="text-sm font-medium">{lang.label}</div>
                             {languages[lang.value]?.dir === 'rtl' && (
-                              <div className="text-xs text-gray-500 mt-1">RTL</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">RTL</div>
                             )}
                           </button>
                         ))}
                       </div>
-                      <p className="text-sm text-gray-500 mt-2">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                         Select your preferred language. Arabic will enable right-to-left text direction.
                       </p>
                     </div>
                     
                     {/* Theme */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-3">Theme</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Theme</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <button
                           onClick={() => handleThemeChange('light')}
                           className={`p-4 rounded-lg border flex items-center space-x-3 transition-colors ${
-                            settings.theme === 'light'
-                              ? 'border-green-500 bg-green-50 text-green-700'
-                              : 'border-gray-300 hover:border-gray-400'
+                            !darkMode
+                              ? 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                              : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                           }`}
                         >
                           <Sun className="h-5 w-5" />
@@ -463,9 +457,9 @@ const Settings = () => {
                         <button
                           onClick={() => handleThemeChange('dark')}
                           className={`p-4 rounded-lg border flex items-center space-x-3 transition-colors ${
-                            settings.theme === 'dark'
-                              ? 'border-green-500 bg-green-50 text-green-700'
-                              : 'border-gray-300 hover:border-gray-400'
+                            darkMode
+                              ? 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                              : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                           }`}
                         >
                           <Moon className="h-5 w-5" />
@@ -480,19 +474,19 @@ const Settings = () => {
               {/* Notifications Tab */}
               {activeTab === 'notifications' && (
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Notification Settings</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Notification Settings</h2>
                   
                   <div className="space-y-6">
                     {Object.entries(settings.notifications).map(([key, value]) => (
-                      <div key={key} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                      <div key={key} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700">
                         <div>
-                          <h3 className="font-medium text-gray-900 capitalize">
+                          <h3 className="font-medium text-gray-900 dark:text-white capitalize">
                             {key === 'email' ? 'Email Notifications' :
                              key === 'push' ? 'Push Notifications' :
                              key === 'predictions' ? 'Prediction Updates' :
                              'Weather Alerts'}
                           </h3>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
                             {key === 'email' ? 'Receive updates via email' :
                              key === 'push' ? 'Browser push notifications' :
                              key === 'predictions' ? 'Get notified about prediction results' :
@@ -517,27 +511,27 @@ const Settings = () => {
             </Card>
 
             {/* Danger Zone */}
-            <Card className="p-6 mt-8 border-red-200">
-              <h2 className="text-xl font-semibold text-red-900 mb-6">Danger Zone</h2>
+            <Card className="p-6 mt-8 border-red-200 dark:border-red-800 dark:bg-gray-800">
+              <h2 className="text-xl font-semibold text-red-900 dark:text-red-400 mb-6">Danger Zone</h2>
               
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg bg-red-50">
+                <div className="flex items-center justify-between p-4 border border-red-200 dark:border-red-800 rounded-lg bg-red-50 dark:bg-red-900/20">
                   <div>
-                    <h3 className="font-medium text-red-900">Export Data</h3>
-                    <p className="text-sm text-red-700">Download all your data in JSON format</p>
+                    <h3 className="font-medium text-red-900 dark:text-red-400">Export Data</h3>
+                    <p className="text-sm text-red-700 dark:text-red-300">Download all your data in JSON format</p>
                   </div>
-                  <Button variant="outline" onClick={handleExportData} className="text-red-600 border-red-300 hover:bg-red-50">
+                  <Button variant="outline" onClick={handleExportData} className="text-red-600 dark:text-red-400 border-red-300 dark:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/30">
                     <Download className="h-4 w-4 mr-2" />
                     Export
                   </Button>
                 </div>
                 
-                <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg bg-red-50">
+                <div className="flex items-center justify-between p-4 border border-red-200 dark:border-red-800 rounded-lg bg-red-50 dark:bg-red-900/20">
                   <div>
-                    <h3 className="font-medium text-red-900">Delete Account</h3>
-                    <p className="text-sm text-red-700">Permanently delete your account and all data</p>
+                    <h3 className="font-medium text-red-900 dark:text-red-400">Delete Account</h3>
+                    <p className="text-sm text-red-700 dark:text-red-300">Permanently delete your account and all data</p>
                   </div>
-                  <Button variant="outline" onClick={handleDeleteAccount} className="text-red-600 border-red-300 hover:bg-red-50">
+                  <Button variant="outline" onClick={handleDeleteAccount} className="text-red-600 dark:text-red-400 border-red-300 dark:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/30">
                     <Trash2 className="h-4 w-4 mr-2" />
                     Delete
                   </Button>

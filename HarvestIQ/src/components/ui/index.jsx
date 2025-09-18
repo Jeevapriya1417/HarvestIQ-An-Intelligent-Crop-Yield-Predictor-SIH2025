@@ -16,10 +16,10 @@ export const Button = ({
   
   const variants = {
     primary: 'bg-gradient-primary text-white hover:shadow-lg focus:ring-green-500',
-    secondary: 'bg-white text-green-700 border-2 border-green-200 hover:bg-green-50 focus:ring-green-500',
-    outline: 'border-2 border-green-600 text-green-600 hover:bg-green-50 focus:ring-green-500',
-    ghost: 'text-green-600 hover:bg-green-50 focus:ring-green-500',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
+    secondary: 'bg-white dark:bg-gray-800 text-green-700 dark:text-green-300 border-2 border-green-200 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 focus:ring-green-500',
+    outline: 'border-2 border-green-600 dark:border-green-500 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 focus:ring-green-500',
+    ghost: 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 focus:ring-green-500',
+    danger: 'bg-red-600 dark:bg-red-700 text-white hover:bg-red-700 dark:hover:bg-red-800 focus:ring-red-500'
   };
   
   const sizes = {
@@ -60,14 +60,14 @@ export const Input = ({
   const hasWarning = warning && warning.trim() !== '';
   const isValid = !hasError && !isValidating && props.value && props.value.trim() !== '';
   
-  const inputClasses = `w-full px-4 py-3 pr-10 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
+  const inputClasses = `w-full px-4 py-3 pr-10 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
     hasError 
       ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
       : hasWarning
       ? 'border-yellow-500 focus:ring-yellow-500 focus:border-yellow-500'
       : isValid && showValidIcon
       ? 'border-green-500'
-      : 'border-gray-300'
+      : 'border-gray-300 dark:border-gray-600'
   } ${className}`;
   
   const handleBlur = (e) => {
@@ -77,7 +77,7 @@ export const Input = ({
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -118,7 +118,7 @@ export const Input = ({
           <svg className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
           </svg>
-          <p className="text-sm text-red-600">{error}</p>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
       
@@ -128,7 +128,7 @@ export const Input = ({
           <svg className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
           </svg>
-          <p className="text-sm text-yellow-600">{warning}</p>
+          <p className="text-sm text-yellow-600 dark:text-yellow-400">{warning}</p>
         </div>
       )}
       
@@ -138,7 +138,7 @@ export const Input = ({
           <svg className="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-sm text-gray-500">{hint}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{hint}</p>
         </div>
       )}
     </div>
@@ -163,14 +163,14 @@ export const Select = ({
   const hasWarning = warning && warning.trim() !== '';
   const isValid = !hasError && !isValidating && props.value && props.value.trim() !== '';
   
-  const selectClasses = `w-full px-4 py-3 pr-10 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
+  const selectClasses = `w-full px-4 py-3 pr-10 border rounded-lg transition-all duration-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
     hasError 
       ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
       : hasWarning
       ? 'border-yellow-500 focus:ring-yellow-500 focus:border-yellow-500'
       : isValid && showValidIcon
       ? 'border-green-500'
-      : 'border-gray-300'
+      : 'border-gray-300 dark:border-gray-600'
   } ${className}`;
   
   const handleBlur = (e) => {
@@ -180,7 +180,7 @@ export const Select = ({
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -191,9 +191,9 @@ export const Select = ({
           onBlur={handleBlur}
           {...props}
         >
-          <option value="">{placeholder}</option>
+          <option value="" className="dark:bg-gray-800">{placeholder}</option>
           {options.map((option, index) => (
-            <option key={index} value={option.value || option}>
+            <option key={index} value={option.value || option} className="dark:bg-gray-800">
               {option.label || option}
             </option>
           ))}
@@ -228,7 +228,7 @@ export const Select = ({
           <svg className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
           </svg>
-          <p className="text-sm text-red-600">{error}</p>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
       
@@ -238,7 +238,7 @@ export const Select = ({
           <svg className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
           </svg>
-          <p className="text-sm text-yellow-600">{warning}</p>
+          <p className="text-sm text-yellow-600 dark:text-yellow-400">{warning}</p>
         </div>
       )}
     </div>
@@ -255,9 +255,9 @@ export const Card = ({
   const baseClasses = 'rounded-xl border transition-all duration-300';
   
   const variants = {
-    default: 'bg-white border-gray-200 shadow-sm',
-    glass: 'glass bg-white/80 backdrop-blur-sm border-white/20 shadow-xl',
-    gradient: 'bg-gradient-to-br from-white to-gray-50 border-gray-100 shadow-lg'
+    default: 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm',
+    glass: 'glass bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-white/20 dark:border-gray-700/20 shadow-xl',
+    gradient: 'bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border-gray-100 dark:border-gray-700 shadow-lg'
   };
   
   const hoverClasses = hover ? 'hover:shadow-lg hover:-translate-y-1' : '';
@@ -281,11 +281,11 @@ export const Badge = ({
   const baseClasses = 'inline-flex items-center font-medium rounded-full';
   
   const variants = {
-    default: 'bg-gray-100 text-gray-800',
-    success: 'bg-green-100 text-green-800',
-    warning: 'bg-yellow-100 text-yellow-800',
-    error: 'bg-red-100 text-red-800',
-    info: 'bg-blue-100 text-blue-800'
+    default: 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200',
+    success: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300',
+    warning: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300',
+    error: 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300',
+    info: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300'
   };
   
   const sizes = {
@@ -330,12 +330,12 @@ export const ProgressBar = ({
   return (
     <div className={`w-full space-y-1 ${className}`}>
       {showLabel && (
-        <div className="flex justify-between text-sm font-medium text-gray-700">
+        <div className="flex justify-between text-sm font-medium text-gray-700 dark:text-gray-300">
           <span>Progress</span>
           <span>{percentage.toFixed(0)}%</span>
         </div>
       )}
-      <div className={`w-full bg-gray-200 rounded-full ${sizes[size]}`}>
+      <div className={`w-full bg-gray-200 dark:bg-gray-700 rounded-full ${sizes[size]}`}>
         <div 
           className={`${colors[color]} ${sizes[size]} rounded-full transition-all duration-500 ease-out`}
           style={{ width: `${percentage}%` }}
@@ -373,9 +373,9 @@ export const LoadingSpinner = ({
 // Enhanced Skeleton Loader Component
 export const Skeleton = ({ className = '', variant = 'default', children }) => {
   const variants = {
-    default: 'bg-gray-200 animate-pulse',
-    shimmer: 'bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer bg-[length:200%_100%]',
-    wave: 'bg-gray-200 animate-pulse relative overflow-hidden'
+    default: 'bg-gray-200 dark:bg-gray-700 animate-pulse',
+    shimmer: 'bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-shimmer bg-[length:200%_100%]',
+    wave: 'bg-gray-200 dark:bg-gray-700 animate-pulse relative overflow-hidden'
   };
 
   if (variant === 'wave') {
@@ -397,14 +397,14 @@ export const Skeleton = ({ className = '', variant = 'default', children }) => {
 // Page Loading Component
 export const PageLoader = ({ message = 'Loading...', showSpinner = true }) => {
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-white dark:bg-gray-900 bg-opacity-90 dark:bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center">
       <div className="text-center animate-fade-in-up">
         {showSpinner && (
           <div className="mb-4">
             <LoadingSpinner size="xl" color="green" />
           </div>
         )}
-        <p className="text-gray-600 text-lg font-medium">{message}</p>
+        <p className="text-gray-600 dark:text-gray-300 text-lg font-medium">{message}</p>
       </div>
     </div>
   );
@@ -436,10 +436,10 @@ export const Toast = ({
   className = '' 
 }) => {
   const types = {
-    success: 'bg-green-50 border-green-200 text-green-800',
-    error: 'bg-red-50 border-red-200 text-red-800',
-    warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-    info: 'bg-blue-50 border-blue-200 text-blue-800'
+    success: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300',
+    error: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-300',
+    info: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300'
   };
 
   const icons = {
@@ -481,10 +481,10 @@ export const Alert = ({
   className = '' 
 }) => {
   const variants = {
-    info: 'bg-blue-50 border-blue-200 text-blue-800',
-    success: 'bg-green-50 border-green-200 text-green-800',
-    warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-    error: 'bg-red-50 border-red-200 text-red-800'
+    info: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300',
+    success: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-300',
+    error: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300'
   };
   
   const classes = `relative p-4 border rounded-lg ${variants[variant]} ${className}`;
@@ -523,8 +523,8 @@ export const StatCard = ({
     <Card className={`p-6 ${className}`} hover>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{title}</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
           {change && (
             <p className={`text-sm ${changeColors[changeType]}`}>
               {change}
@@ -532,8 +532,8 @@ export const StatCard = ({
           )}
         </div>
         {Icon && (
-          <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-            <Icon className="h-6 w-6 text-green-600" />
+          <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+            <Icon className="h-6 w-6 text-green-600 dark:text-green-400" />
           </div>
         )}
       </div>
