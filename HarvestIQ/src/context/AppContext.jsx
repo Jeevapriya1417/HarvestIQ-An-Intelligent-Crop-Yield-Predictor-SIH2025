@@ -1,6 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { authAPI, checkServerHealth } from '../services/api';
 
+// Debug function to check localStorage values
+const debugStorage = () => {
+  console.log('Current localStorage values:');
+  console.log('harvestiq_user:', localStorage.getItem('harvestiq_user'));
+  console.log('harvestiq_token:', localStorage.getItem('harvestiq_token'));
+  console.log('harvestiq_theme:', localStorage.getItem('harvestiq_theme'));
+  console.log('harvestiq_language:', localStorage.getItem('harvestiq_language'));
+};
+
 const AppContext = createContext();
 
 export const useApp = () => {
@@ -21,13 +30,34 @@ export const AppProvider = ({ children }) => {
 
   // Load user from localStorage on app start
   useEffect(() => {
+    debugStorage();
+    
     const savedUser = localStorage.getItem('harvestiq_user');
     const savedLanguage = localStorage.getItem('harvestiq_language');
     const savedTheme = localStorage.getItem('harvestiq_theme');
     const savedToken = localStorage.getItem('harvestiq_token');
     
+    console.log('Loading user from localStorage:', {
+      hasUser: !!savedUser,
+      hasToken: !!savedToken,
+      rawUser: savedUser
+    });
+
     if (savedUser && savedToken) {
-      setUser(JSON.parse(savedUser));
+      try {
+        const parsedUser = JSON.parse(savedUser);
+        console.log('Parsed user data:', parsedUser);
+        
+        // Ensure user has name property
+        if (!parsedUser.name && parsedUser.username) {
+          parsedUser.name = parsedUser.username;
+          console.log('Added name property from username:', parsedUser);
+        }
+        
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+      }
     }
     if (savedLanguage) {
       setLanguage(savedLanguage);
@@ -63,13 +93,22 @@ export const AppProvider = ({ children }) => {
     try {
       const result = await authAPI.login(credentials);
       
+      console.log('Login API response:', {
+        success: result.success,
+        data: result.data,
+        error: result.error
+      });
+
       if (result.success) {
+        console.log('Setting user from login response:', result.data.user);
         setUser(result.data.user);
         return { success: true };
       } else {
+        console.error('Login failed:', result.error);
         return { success: false, error: result.error };
       }
     } catch (error) {
+      console.error('Login network error:', error);
       return { success: false, error: 'Network error. Please check your connection.' };
     } finally {
       setIsLoading(false);
@@ -171,9 +210,53 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('harvestiq_language', newLanguage);
   };
 
+  // Add effect to watch user changes and save to localStorage
+  useEffect(() => {
+    if (user) {
+      // Ensure user has name property
+      if (user.name) {
+        console.log('User state changed, saving to localStorage:', user);
+        localStorage.setItem('harvestiq_user', JSON.stringify(user));
+      } else {
+        console.warn('User object missing name property:', user);
+        // Try to use username as fallback
+        if (user.username) {
+          const userWithName = { ...user, name: user.username };
+          console.log('Saving user with username as name:', userWithName);
+          localStorage.setItem('harvestiq_user', JSON.stringify(userWithName));
+        } else {
+          console.error('User object has neither name nor username property');
+        }
+      }
+    } else {
+      console.log('User state cleared, removing from localStorage');
+      localStorage.removeItem('harvestiq_user');
+    }
+  }, [user]);
+
+  // Create a validated user object
+  const validatedUser = user ? {
+    id: user.id || null,
+    fullName: user.fullName || user.name || user.username || 'User',
+    firstName: (user.fullName || user.name || user.username || 'User').split(' ')[0],
+    email: user.email || '',
+    role: user.role || 'user',
+    avatar: user.avatar || null,
+    preferences: user.preferences || {
+      language: 'en',
+      theme: 'light',
+      notifications: {
+        email: true,
+        weather: true,
+        market: true
+      }
+    },
+    // Add other properties with defaults as needed
+  } : null;
+
   const value = {
     // State
-    user,
+    user: validatedUser,
     isLoading,
     predictions,
     darkMode,

@@ -98,8 +98,8 @@ const Settings = () => {
       const result = await authAPI.updateProfile(profileData);
       
       if (result.success) {
-        // Update the user in context
-        // Note: updateProfile function should be available from useApp
+        // Update the user in context to reflect changes across the app
+        await updateProfile(profileData);
         showMessage('success', 'Profile updated successfully');
       } else {
         showMessage('error', result.error);

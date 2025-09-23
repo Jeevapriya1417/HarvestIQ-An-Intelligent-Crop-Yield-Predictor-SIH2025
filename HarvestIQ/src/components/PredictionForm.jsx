@@ -12,7 +12,7 @@ import { useStaggeredAnimation, useDelayedVisibility } from '../hooks/useAnimati
 const PredictionForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { addPrediction, user } = useApp();
+  const { addPrediction, user: currentUser } = useApp();
   
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,20 +37,72 @@ const PredictionForm = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
   const cropOptions = [
-    { value: 'Wheat', label: 'Wheat (गेहूं)' },
-    { value: 'Rice', label: 'Rice (चावल)' },
-    { value: 'Sugarcane', label: 'Sugarcane (गन्ना)' },
-    { value: 'Cotton', label: 'Cotton (कपास)' },
+    { value: 'Arecanut', label: 'Arecanut' },
+    { value: 'Arhar/Tur', label: 'Arhar/Tur (अरहर/तुर)' },
+    { value: 'Bajra', label: 'Bajra (बाजरा)' },
+    { value: 'Banana', label: 'Banana (केला)' },
+    { value: 'Barley', label: 'Barley (जौ)' },
+    { value: 'Black pepper', label: 'Black pepper (काली मिर्च)' },
+    { value: 'Cardamom', label: 'Cardamom (इलायची)' },
+    { value: 'Cashewnut', label: 'Cashewnut (काजू)' },
+    { value: 'Castor seed', label: 'Castor seed (अरंडी)' },
+    { value: 'Coconut', label: 'Coconut (नारियल)' },
+    { value: 'Coriander', label: 'Coriander (धनिया)' },
+    { value: 'Cotton(lint)', label: 'Cotton (कपास)' },
+    { value: 'Dry chillies', label: 'Dry chillies (सूखी मिर्च)' },
+    { value: 'Garlic', label: 'Garlic (लहसुन)' },
+    { value: 'Ginger', label: 'Ginger (अदरक)' },
+    { value: 'Gram', label: 'Gram (चना)' },
+    { value: 'Groundnut', label: 'Groundnut (मूंगफली)' },
+    { value: 'Horse-gram', label: 'Horse-gram (कुल्थी)' },
+    { value: 'Jowar', label: 'Jowar (ज्वार)' },
+    { value: 'Jute', label: 'Jute (जूट)' },
+    { value: 'Khesari', label: 'Khesari (खेसारी)' },
+    { value: 'Linseed', label: 'Linseed (अलसी)' },
     { value: 'Maize', label: 'Maize (मक्का)' },
-    { value: 'Barley', label: 'Barley (जौ)' }
+    { value: 'Masoor', label: 'Masoor (मसूर)' },
+    { value: 'Mesta', label: 'Mesta (मेस्ता)' },
+    { value: 'Moong(Green Gram)', label: 'Moong/Green Gram (मूंग)' },
+    { value: 'Niger seed', label: 'Niger seed (सरसों)' },
+    { value: 'Onion', label: 'Onion (प्याज)' },
+    { value: 'Other Rabi pulses', label: 'Other Rabi pulses (अन्य रबी दालें)' },
+    { value: 'Other Kharif pulses', label: 'Other Kharif pulses (अन्य खरीफ दालें)' },
+    { value: 'Peas & beans (Pulses)', label: 'Peas & beans (मटर और बीन्स)' },
+    { value: 'Potato', label: 'Potato (आलू)' },
+    { value: 'Ragi', label: 'Ragi (रागी)' },
+    { value: 'Rapeseed &Mustard', label: 'Rapeseed & Mustard (सरसों)' },
+    { value: 'Rice', label: 'Rice (चावल)' },
+    { value: 'Safflower', label: 'Safflower (कुसुम)' },
+    { value: 'Sannhamp', label: 'Sannhamp (सनई)' },
+    { value: 'Sesamum', label: 'Sesamum (तिल)' },
+    { value: 'Small millets', label: 'Small millets (छोटे बाजरे)' },
+    { value: 'Soyabean', label: 'Soyabean (सोयाबीन)' },
+    { value: 'Sugarcane', label: 'Sugarcane (गन्ना)' },
+    { value: 'Sunflower', label: 'Sunflower (सूरजमुखी)' },
+    { value: 'Sweet potato', label: 'Sweet potato (शकरकंद)' },
+    { value: 'Tapioca', label: 'Tapioca (टैपिओका)' },
+    { value: 'Tobacco', label: 'Tobacco (तम्बाकू)' },
+    { value: 'Turmeric', label: 'Turmeric (हल्दी)' },
+    { value: 'Urad', label: 'Urad (उड़द)' },
+    { value: 'Wheat', label: 'Wheat (गेहूं)' },
+    { value: 'other oilseeds', label: 'Other oilseeds (अन्य तिलहन)' }
   ];
 
   const regionOptions = [
-    { value: 'Punjab', label: 'Punjab (पंजाब)' },
+    { value: 'Andhra Pradesh', label: 'Andhra Pradesh (आंध्र प्रदेश)' },
+    { value: 'Assam', label: 'Assam (असम)' },
+    { value: 'Goa', label: 'Goa (गोआ)' },
+    { value: 'Gujarat', label: 'Gujarat (गुजरात)' },
     { value: 'Haryana', label: 'Haryana (हरियाणा)' },
-    { value: 'Uttar Pradesh', label: 'Uttar Pradesh (उत्तर प्रदेश)' },
+    { value: 'Karnataka', label: 'Karnataka (कर्नाटक)' },
+    { value: 'Kerala', label: 'Kerala (केरल)' },
+    { value: 'Meghalaya', label: 'Meghalaya (मेघालय)' },
+    { value: 'Puducherry', label: 'Puducherry (पुदुचेरी)' },
+    { value: 'Punjab', label: 'Punjab (पंजाब)' },
     { value: 'Rajasthan', label: 'Rajasthan (राजस्थान)' },
-    { value: 'Gujarat', label: 'Gujarat (गुजरात)' }
+    { value: 'Tamil Nadu', label: 'Tamil Nadu (तमिलनाडु)' },
+    { value: 'Uttar Pradesh', label: 'Uttar Pradesh (उत्तर प्रदेश)' },
+    { value: 'West Bengal', label: 'West Bengal (पश्चिम बंगाल)' }
   ];
 
   const handleInputChange = (e) => {
@@ -154,35 +206,87 @@ const PredictionForm = () => {
     }, 200);
     
     try {
-      const inputData = { ...formData, farmerId: user?.id };
+      const inputData = { 
+        ...formData, 
+        farmerId: currentUser?.id,
+        userId: currentUser?.id
+      };
+      
+      // First try to use the AI model
       const result = await predictionEngine.generatePrediction(inputData);
+      
+      // Debug logging
+      console.log('Prediction result:', result);
       
       // Complete progress
       setPredictionProgress(100);
       clearInterval(progressInterval);
       
-      if (result.success) {
-        setPrediction(result);
-        addPrediction(result);
-        setShowSuccessAnimation(true);
-        
-        // Smooth transition to results
-        setTimeout(() => {
-          setCurrentStep(4);
-          setShowSuccessAnimation(false);
-        }, 1500);
-      } else {
-        setErrors({ general: result.error || 'Failed to generate prediction. Please try again.' });
-      }
-    } catch (error) {
-      console.error('Prediction error:', error);
-      setErrors({ general: 'An unexpected error occurred. Please try again.' });
-      clearInterval(progressInterval);
-    } finally {
+      // Set prediction results
+      setPrediction(result);
+      
+      // Save prediction to context with complete data
+      const predictionRecord = {
+        id: Date.now(),
+        timestamp: new Date().toISOString(),
+        cropType: inputData.cropType,
+        farmArea: parseFloat(inputData.farmArea),
+        region: inputData.region,
+        inputData: {
+          cropType: inputData.cropType,
+          farmArea: parseFloat(inputData.farmArea),
+          region: inputData.region,
+          phLevel: parseFloat(inputData.phLevel) || null,
+          organicContent: parseFloat(inputData.organicContent) || null,
+          nitrogen: parseFloat(inputData.nitrogen) || null,
+          phosphorus: parseFloat(inputData.phosphorus) || null,
+          potassium: parseFloat(inputData.potassium) || null,
+          rainfall: parseFloat(inputData.rainfall),
+          temperature: parseFloat(inputData.temperature),
+          humidity: parseFloat(inputData.humidity) || null
+        },
+        results: {
+          expectedYield: result?.expectedYield || result?.data?.expectedYield || 'N/A',
+          yieldPerHectare: result?.yieldPerHectare || result?.expectedYield || result?.data?.expectedYield || 'N/A',
+          totalYield: result?.totalYield || (parseFloat(result?.expectedYield || result?.data?.expectedYield || 0) * parseFloat(inputData.farmArea || 1)).toFixed(2),
+          confidence: result?.confidence || 95,
+          recommendations: result?.recommendations || [],
+          modelUsed: result?.modelUsed || 'JavaScript Generic Model'
+        },
+        processing: {
+          status: 'completed',
+          processingTime: Math.random() * 2000 + 500, // Simulated processing time
+          modelVersion: '1.0.0'
+        },
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      // Add to predictions list
+      addPrediction(predictionRecord);
+      
+      // Show success animation
+      setShowSuccessAnimation(true);
       setTimeout(() => {
-        setIsLoading(false);
-        setPredictionProgress(0);
-      }, 800);
+        setShowSuccessAnimation(false);
+        setCurrentStep(4);
+      }, 1500);
+      
+    } catch (error) {
+      // Complete progress
+      setPredictionProgress(0);
+      clearInterval(progressInterval);
+      
+      // Set error
+      setErrors({
+        general: error.message || 'Failed to generate prediction. Please try again.'
+      });
+      
+      console.error('Prediction error:', error);
+    } finally {
+      setIsLoading(false);
+      setIsValidating(false);
     }
   };
 
@@ -535,11 +639,16 @@ const PredictionForm = () => {
                 <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-6 max-w-md mx-auto">
                   <h3 className="text-lg font-semibold text-green-900 dark:text-green-100 mb-2">Expected Yield</h3>
                   <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                    {prediction.prediction?.expectedYield || 'N/A'} tons/ha
+                    {prediction?.expectedYield || prediction?.data?.expectedYield || 'N/A'} tons/ha
                   </p>
                   <p className="text-sm text-green-700 dark:text-green-300 mt-2">
-                    Confidence: {prediction.confidence || 95}%
+                    Confidence: {prediction?.confidence || 95}%
                   </p>
+                  {prediction?.totalYield && (
+                    <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+                      Total: {prediction.totalYield} tons
+                    </p>
+                  )}
                 </div>
                 
                 <div className="flex justify-center space-x-4">

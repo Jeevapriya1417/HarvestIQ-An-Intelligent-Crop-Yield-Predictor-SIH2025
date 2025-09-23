@@ -102,6 +102,14 @@ const predictionSchema = new mongoose.Schema({
       type: String,
       enum: ['javascript', 'python-ml', 'python-dl', 'ensemble'],
       default: 'javascript'
+    },
+    cropType: {
+      type: String,
+      default: 'Wheat'
+    },
+    region: {
+      type: String,
+      default: 'all'
     }
   },
 

@@ -1,7 +1,9 @@
 // AI Prediction Engine for Crop Yield Analysis
+// AI Prediction Engine for Crop Yield Analysis
 // Integrates government data with machine learning algorithms
 
 import governmentDataService from './governmentDataService.js';
+import { toPythonFormat, fromPythonFormat } from './dataTransformer';
 
 export class PredictionEngine {
   constructor() {
@@ -16,6 +18,9 @@ export class PredictionEngine {
 
   async generatePrediction(inputData) {
     try {
+      // For now, let's skip the AI API and go directly to JavaScript models
+      // This ensures we get working predictions immediately
+      
       // Fetch government data
       const [weatherData, soilData, historicalData, marketData] = await Promise.all([
         governmentDataService.getWeatherData(inputData.region),
@@ -215,6 +220,54 @@ export class PredictionEngine {
       yieldPerHectare: expectedYield.toFixed(2),
       totalYield: (expectedYield * parseFloat(data.farmArea || 1)).toFixed(2),
       factors: { yieldFactor: yieldFactor.toFixed(3) }
+    };
+  }
+
+  genericYieldModel(data) {
+    const baseYield = 3.5; // Default base yield
+    let yieldFactor = 1.0;
+
+    // Generic weather factors
+    const userTemp = parseFloat(data.temperature) || 25;
+    const userRainfall = parseFloat(data.rainfall) || 500;
+    const userPH = parseFloat(data.phLevel) || 6.5;
+    
+    // Temperature factor (optimal range 15-35°C)
+    if (userTemp >= 15 && userTemp <= 35) {
+      yieldFactor *= 1.05;
+    } else if (userTemp < 5 || userTemp > 45) {
+      yieldFactor *= 0.8;
+    }
+    
+    // Rainfall factor (optimal range 300-1200mm)
+    if (userRainfall >= 300 && userRainfall <= 1200) {
+      yieldFactor *= 1.1;
+    } else if (userRainfall < 100) {
+      yieldFactor *= 0.7;
+    }
+    
+    // pH factor (optimal range 6.0-7.5)
+    if (userPH >= 6.0 && userPH <= 7.5) {
+      yieldFactor *= 1.05;
+    } else if (userPH < 5.0 || userPH > 8.5) {
+      yieldFactor *= 0.9;
+    }
+
+    // Add some randomness for realism
+    yieldFactor *= (0.95 + Math.random() * 0.1);
+
+    const expectedYield = baseYield * yieldFactor;
+    const farmArea = parseFloat(data.farmArea) || 1;
+    
+    return {
+      expectedYield: expectedYield.toFixed(2),
+      yieldPerHectare: expectedYield.toFixed(2),
+      totalYield: (expectedYield * farmArea).toFixed(2),
+      factors: { 
+        yieldFactor: yieldFactor.toFixed(3),
+        baseYield: baseYield,
+        model: 'generic'
+      }
     };
   }
 

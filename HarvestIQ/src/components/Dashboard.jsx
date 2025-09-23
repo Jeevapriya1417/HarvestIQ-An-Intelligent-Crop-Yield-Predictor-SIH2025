@@ -177,7 +177,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-2 animate-slide-up">
-                Welcome back, {user?.name || 'User'}! 👋
+                Welcome back, {user?.fullName ? user.fullName.split(' ')[0] : 'User'}! 👋
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-300 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 {t('dashboard.subtitle')}

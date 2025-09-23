@@ -2,9 +2,6 @@ import axios from 'axios';
 import AiModel from '../models/AiModel.js';
 import { dataTransformer } from './dataTransformer.js';
 
-// Import existing prediction engine as fallback
-import predictionEngine from '../../src/services/predictionEngine.js';
-
 class AIService {
   constructor() {
     this.pythonServiceUrl = process.env.PYTHON_AI_SERVICE_URL || 'http://localhost:8000';
@@ -66,8 +63,8 @@ class AIService {
       // Transform data for JavaScript engine
       const transformedData = dataTransformer.toJavaScriptFormat(inputData, userId);
       
-      // Use existing prediction engine
-      const result = await predictionEngine.generatePrediction(transformedData);
+      // Simple fallback prediction logic
+      const result = this.calculateSimplePrediction(transformedData);
       
       return {
         results: {
@@ -81,7 +78,7 @@ class AIService {
         governmentData: result.governmentData || {},
         modelInfo: {
           type: 'javascript',
-          name: 'JavaScript-Default',
+          name: 'JavaScript-Fallback',
           version: '1.0.0'
         }
       };
@@ -381,6 +378,102 @@ class AIService {
     }
 
     return errors;
+  }
+
+  /**
+   * Simple fallback prediction calculation
+   */
+  calculateSimplePrediction(inputData) {
+    // Base yields for different crops (tons per hectare)
+    const baseYields = {
+      'wheat': 4.5,
+      'rice': 6.2,
+      'sugarcane': 75,
+      'cotton': 2.8,
+      'maize': 5.4,
+      'barley': 3.2
+    };
+
+    const cropType = inputData.cropType?.toLowerCase() || 'wheat';
+    let baseYield = baseYields[cropType] || 3.0;
+    let yieldFactor = 1.0;
+
+    // Simple weather factors
+    if (inputData.temperature) {
+      const temp = parseFloat(inputData.temperature);
+      if (temp >= 15 && temp <= 30) yieldFactor *= 1.1;
+      else if (temp < 5 || temp > 40) yieldFactor *= 0.8;
+    }
+
+    if (inputData.rainfall) {
+      const rainfall = parseFloat(inputData.rainfall);
+      if (rainfall >= 400 && rainfall <= 1000) yieldFactor *= 1.1;
+      else if (rainfall < 200) yieldFactor *= 0.7;
+    }
+
+    // Soil factors
+    if (inputData.phLevel) {
+      const pH = parseFloat(inputData.phLevel);
+      if (pH >= 6.0 && pH <= 7.5) yieldFactor *= 1.05;
+      else if (pH < 5.0 || pH > 8.5) yieldFactor *= 0.9;
+    }
+
+    const expectedYield = baseYield * yieldFactor;
+    const farmArea = parseFloat(inputData.farmArea) || 1;
+    const totalYield = expectedYield * farmArea;
+
+    return {
+      expectedYield: expectedYield.toFixed(2),
+      yieldPerHectare: expectedYield.toFixed(2),
+      totalYield: totalYield.toFixed(2),
+      confidence: Math.min(95, Math.max(75, 85 + Math.random() * 10)),
+      factors: {
+        baseYield,
+        yieldFactor: yieldFactor.toFixed(3),
+        method: 'simple-calculation'
+      },
+      recommendations: this.generateSimpleRecommendations(inputData, yieldFactor),
+      governmentData: {}
+    };
+  }
+
+  /**
+   * Generate simple recommendations
+   */
+  generateSimpleRecommendations(inputData, yieldFactor) {
+    const recommendations = [];
+
+    if (yieldFactor < 0.9) {
+      recommendations.push({
+        type: 'improvement',
+        priority: 'high',
+        title: 'Yield Enhancement Required',
+        description: 'Current conditions may reduce yield. Consider soil improvement and irrigation.',
+        action: 'Review farming practices and soil health'
+      });
+    }
+
+    if (inputData.phLevel && (parseFloat(inputData.phLevel) < 6.0 || parseFloat(inputData.phLevel) > 7.5)) {
+      recommendations.push({
+        type: 'soil',
+        priority: 'medium',
+        title: 'Soil pH Adjustment',
+        description: 'Soil pH is outside optimal range. Consider lime or sulfur application.',
+        action: 'Test soil and adjust pH levels'
+      });
+    }
+
+    if (inputData.rainfall && parseFloat(inputData.rainfall) < 400) {
+      recommendations.push({
+        type: 'irrigation',
+        priority: 'high',
+        title: 'Irrigation Required',
+        description: 'Low rainfall detected. Plan for supplemental irrigation.',
+        action: 'Install efficient irrigation systems'
+      });
+    }
+
+    return recommendations;
   }
 }
 

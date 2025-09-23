@@ -4,10 +4,13 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import connectDB from './config/database.js';
+
+// Import routes
 import authRoutes from './routes/auth.js';
 import predictionRoutes from './routes/predictions.js';
 import fieldRoutes from './routes/fields.js';
 import aiModelRoutes from './routes/aiModels.js';
+import aiRoutes from './routes/ai.js';
 
 // Load environment variables
 dotenv.config();
@@ -66,6 +69,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/predictions', predictionRoutes);
 app.use('/api/fields', fieldRoutes);
 app.use('/api/ai-models', aiModelRoutes);
+app.use('/api/ai', aiRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
