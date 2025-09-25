@@ -1,8 +1,13 @@
 // AI Controller
 import { spawn } from 'child_process';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { validatePredictionInput } from '../utils/validation.js';
 import AiModel from '../models/AiModel.js';
+
+// Get current directory for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /**
  * Run Python prediction model
@@ -11,8 +16,10 @@ import AiModel from '../models/AiModel.js';
  */
 const runPythonModel = (data) => {
   return new Promise((resolve, reject) => {
+    // Use the CLI version of the model
+    const pythonScript = join(__dirname, '../../Py model', 'harvest_cli.py');
     const pythonProcess = spawn('python', [
-      join(__dirname, '../../Py model', 'harvest.py'),
+      pythonScript,
       JSON.stringify(data)
     ]);
 
