@@ -281,7 +281,7 @@ Contributions are welcome! Here's how:
 
 ## 👥 Authors
 
-**Team Lead**: [Balaji K](https://github.com/balajii1629-rgb))
+**Team Lead**: [Balaji K](https://github.com/balajii1629-rgb)
 
 **ML MODEL**: [Devanandh](https://github.com/#)
 
@@ -291,7 +291,7 @@ Contributions are welcome! Here's how:
 
 **Frontend UI/UX**: [Jeeva Priya R](https://github.com/Jeevapriya1417)
 
-**Integration & Support**: [Santhosh Kumar S](https://github.com/#)
+**Integration & Support**: [Santhosh Kumar S](https://github.com/SanthoshKumar1714)
 
 ---
 
