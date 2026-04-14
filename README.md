@@ -282,10 +282,15 @@ Contributions are welcome! Here's how:
 ## 👥 Authors
 
 **Team Lead**: [Balaji K](https://github.com/#)
+
 **ML MODEL**: [Devanandh](https://github.com/#)
+
 **Backend & Support**: [Parvadha Varsan](https://github.com/#)
+
 **Backend & Security**: [Sathya Jothi K](https://github.com/#)
+
 **Frontend UI/UX**: [Jeeva Priya R](https://github.com/Jeevapriya1417)
+
 **Integration & Support**: [Balaji K](https://github.com/#)
 
 ---
