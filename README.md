@@ -291,7 +291,7 @@ Contributions are welcome! Here's how:
 
 **Frontend UI/UX**: [Jeeva Priya R](https://github.com/Jeevapriya1417)
 
-**Integration & Support**: [Balaji K](https://github.com/#)
+**Integration & Support**: [Santhosh Kumar S](https://github.com/#)
 
 ---
 
