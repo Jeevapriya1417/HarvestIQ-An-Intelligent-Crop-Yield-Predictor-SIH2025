@@ -3,7 +3,6 @@
 <div align="center">
 
 [![GitHub](https://img.shields.io/badge/GitHub-HarvestIQ-blue?style=flat-square&logo=github)](https://github.com/yourusername/HarvestIQ)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![React](https://img.shields.io/badge/React-19.1.1-blue?style=flat-square&logo=react)](https://react.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-green?style=flat-square&logo=node.js)](https://expressjs.com)
 [![Python](https://img.shields.io/badge/Python-FastAPI-blue?style=flat-square&logo=python)](https://fastapi.tiangolo.com)
@@ -283,13 +282,13 @@ Contributions are welcome! Here's how:
 
 **Team Lead**: [Balaji K](https://github.com/balajii1629-rgb)
 
-**ML MODEL**: [Devanandh](https://github.com/#)
+**ML Model**: [Devanandh](https://github.com/Devanand-1059)
 
-**Backend & Support**: [Parvadha Varsan](https://github.com/#)
+**Backend & Support**: [Parvadha Varsan](https://github.com/varsha-1426)
 
 **Backend & Security**: [Sathya Jothi K](https://github.com/#)
 
-**Frontend UI/UX**: [Jeeva Priya R](https://github.com/Jeevapriya1417)
+**Frontend & Security**: [Jeeva Priya R](https://github.com/Jeevapriya1417)
 
 **Integration & Support**: [Santhosh Kumar S](https://github.com/SanthoshKumar1714)
 
