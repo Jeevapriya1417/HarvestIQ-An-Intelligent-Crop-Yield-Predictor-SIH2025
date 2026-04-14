@@ -281,7 +281,7 @@ Contributions are welcome! Here's how:
 
 ## 👥 Authors
 
-**Team Lead**: [Balaji K](https://github.com/#)
+**Team Lead**: [Balaji K](https://github.com/balajii1629-rgb))
 
 **ML MODEL**: [Devanandh](https://github.com/#)
 
