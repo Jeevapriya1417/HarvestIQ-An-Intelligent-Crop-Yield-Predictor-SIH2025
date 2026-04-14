@@ -279,21 +279,20 @@ Contributions are welcome! Here's how:
 
 ---
 
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) for details
-
----
-
 ## 👥 Authors
 
-**Lead Developer**: [Santhosh Kumar S](https://github.com/yourusername)
+**Team Lead**: [Balaji K](https://github.com/#)
+**ML MODEL**: [Devanandh](https://github.com/#)
+**Backend & Support**: [Parvadha Varsan](https://github.com/#)
+**Backend & Security**: [Sathya Jothi K](https://github.com/#)
+**Frontend UI/UX**: [Jeeva Priya R](https://github.com/Jeevapriya1417)
+**Integration & Support**: [Balaji K](https://github.com/#)
 
 ---
 
 ## 📞 Support
 
-- 📧 Email: support@harvestiq.com
+- 📧 Email: santhoshkumar141709@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/yourusername/HarvestIQ/issues)
 - 📖 Docs: [Full Documentation](./Markdowns/)
 
@@ -304,7 +303,7 @@ MIT License - see [LICENSE](LICENSE) for details
 - Built with ❤️ for farmers and agricultural communities
 - Government agencies for open data APIs
 - Open-source community for amazing tools
-
+- Agent driven implementation
 ---
 
 <div align="center">
