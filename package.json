@@ -1,5 +1,22 @@
 {
-  "dependencies": {
-    "joi": "^18.0.1"
+  "name": "harvestiq-root",
+  "version": "1.0.0",
+  "description": "HarvestIQ - Agricultural Yield Prediction System",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "Pymodel"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend",
+    "backend:dev": "node backend/server.js",
+    "backend:check": "node backend/checkIntegration.js",
+    "py:service": "python Pymodel/harvest_fastapi.py",
+    "install:all": "npm install && npm install --workspace=frontend && npm install --workspace=backend",
+    "clean": "rimraf frontend/node_modules backend/node_modules node_modules"
   }
 }
